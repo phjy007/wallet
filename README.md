@@ -1,3 +1,3 @@
-This is wallet project.
+Here is wallet project on Github.
 	
 --Arthur Yoo
