@@ -25,7 +25,7 @@ class Super_admin(User):
 	pass
 
 admin.site.register(User)
-admin.site.register(SuperAdmin)
+admin.site.register(Super_admin)
 
 
 
