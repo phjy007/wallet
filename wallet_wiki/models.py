@@ -21,7 +21,7 @@ class User(models.Model):
 
 	
 
-class SuperAdmin(User):
+class Super_admin(User):
 	pass
 
 admin.site.register(User)
