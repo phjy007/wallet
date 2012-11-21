@@ -1,0 +1,52 @@
+[
+    {
+        "pk": 2, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "tom", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": false, 
+            "is_staff": false, 
+            "last_login": "2011-12-13 04:26:14", 
+            "groups": [], 
+            "user_permissions": [], 
+            "password": "sha1$f352e$c5f78e71d489aa3f5dc6442e3a9674977b343ab6", 
+            "email": "admin@example.com", 
+            "date_joined": "2011-12-13 04:26:14"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "wallet_wiki.Category", 
+        "fields": {
+            "category_name": "Linux",
+            "id": "1"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "wallet_wiki.Category", 
+        "fields": {
+            "category_name": "Windows",
+            "id": "2"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "wallet_wiki.Category", 
+        "fields": {
+            "category_name": "IOS",
+            "id": "3"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "wallet_wiki.Category", 
+        "fields": {
+            "category_name": "Android",
+            "id": "4"
+        }
+    }
+]
