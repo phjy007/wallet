@@ -8,11 +8,11 @@ admin.autodiscover()
 
 
 v1_api = Api(api_name='v1')
-v1_api.register(User_Resource())
-v1_api.register(Category_Resource())
-v1_api.register(Article_meta_Resource())
-v1_api.register(Article_Resource())
-v1_api.register(Keyword_Resource())
+v1_api.register(UserResource())
+v1_api.register(CategoryResource())
+v1_api.register(ArticleMetaResource())
+v1_api.register(ArticleResource())
+v1_api.register(KeywordResource())
 
 v1_api.register(TicketResource())
 v1_api.register(TicketCommentResource())

@@ -48,5 +48,13 @@
             "category_name": "Android",
             "id": "4"
         }
+    },
+    {
+        "pk": 5, 
+        "model": "wallet_wiki.Category", 
+        "fields": {
+            "category_name": "Unix",
+            "id": "4"
+        }
     }
 ]

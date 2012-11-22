@@ -6,11 +6,14 @@ import os
 
 # Create your models here.
 class UserProfile(User):
+	def portrait_path(instance, filename):
+		return os.path.join('user', str(instance.username), 'portrait', filename)
+
 	user      = models.OneToOneField(User, related_name='user')
 	nickname  = models.CharField(max_length=50)
-	fans      = models.ManyToManyField('UserProfile', related_name='user_fans')
-	following = models.ManyToManyField('UserProfile', related_name='user_following')
-	portrait  = models.ImageField(upload_to=portrait_path)
+	# fans      = models.ManyToManyField('UserProfile', related_name='user_fans', blank=True, null=True)
+	following = models.ForeignKey('UserProfile', related_name='user_following', blank=True, null=True)
+	portrait  = models.ImageField(upload_to=portrait_path, blank=True, null=True)
 
 	def __unicode__(self):
 		return self.username
@@ -19,10 +22,7 @@ class UserProfile(User):
 		if created:
 			UserProfile.objects.create(user=instance)
 	post_save.connect(create_user_addition, sender=User)
-
-	def portrait_path(instance, filename):
-		return os.path.join('user', str(instance.username), 'portrait', filename)
-
+	
 
 admin.site.register(UserProfile)
 
@@ -31,22 +31,26 @@ admin.site.register(UserProfile)
 class Inbox(models.Model):
 	user = models.OneToOneField('UserProfile')
 
+	def __unicode__(self):
+		return str(self.user.username) + ' Inbox'
 
 
-class Inbox_item(models.Model):
+
+class InboxItem(models.Model):
 	inbox         = models.ForeignKey('Inbox')
 	msg_type      = models.IntegerField() # 0:Create an article  1:modify an article  2:collect an ariticle
 	brief_content = models.TextField()	  # JSON
 	time          = models.DateTimeField(auto_now=True)
 
 
-admin.site.register(Inbox_item)
+admin.site.register(Inbox)
+admin.site.register(InboxItem)
 
 
 
 class Category(models.Model):
 	category_name = models.CharField(max_length=100, unique=True)
-	parent        = models.ForeignKey('Category', related_name='parent_category', null=True, blank=True)
+	parent        = models.ForeignKey('self', null=True, blank=True)
 
 	def __unicode__(self):
 		return self.category_name
@@ -60,39 +64,43 @@ class Keyword(models.Model):
 	def __unicode__(self):
 		return self.keyword_name
 
+
 admin.site.register(Category)
 admin.site.register(Keyword)
 
 
 
-class Article_meta(models.Model):
+class ArticleMeta(models.Model):
 	title          = models.CharField(max_length=200)
 	category       = models.ManyToManyField('Category')
 	author         = models.ForeignKey('UserProfile')
 	keyword        = models.ManyToManyField('Keyword', related_name='article_meta_keyword', blank=True, null=True)
 	# sited_article  = models.ManyToManyField('Article_meta', related_name='article_meta_sited_article', blank=True, null=True)
-	siting_article = models.ManyToManyField('Article_meta', related_name='article_meta_siting_article', blank=True, null=True)
+	siting_article = models.ManyToManyField('ArticleMeta', related_name='article_meta_siting_article', blank=True, null=True)
+
+	def __unicode__(self):
+		return  'META -' + str(self.title)
 
 
 
 class Article(models.Model):
-	meta       = models.ForeignKey('Article_meta')
+	meta       = models.ForeignKey('ArticleMeta')
 	version    = models.PositiveIntegerField(default=0)
 	content    = models.TextField(blank=True)
 	time       = models.DateTimeField(auto_now=True)
 	is_draft   = models.BooleanField(default=False)
 
 	def __unicode__(self):
-		return self.meta.title
+		return 'ARTICLE -' + str(self.meta.title)
 
 
-admin.site.register(Article_meta)
+admin.site.register(ArticleMeta)
 admin.site.register(Article)
 
 
 
 class Collection(models.Model):
-	article_meta    = models.ForeignKey('Article_meta')
+	article_meta    = models.ForeignKey('ArticleMeta')
 	article_version = models.PositiveIntegerField(default=0)
 	collect_time    = models.DateTimeField(auto_now=True)
 	belong_to       = models.ForeignKey('UserProfile')
@@ -183,3 +191,14 @@ class TicketComment(models.Model):
 
 admin.site.register(Ticket)
 admin.site.register(TicketComment)
+
+class Region(models.Model):  
+    parent = models.ForeignKey('self', null=True, blank=True)  
+    name = models.CharField(max_length=30)  
+    region_type = models.IntegerField()
+
+    def __unicode__(self):
+    	return self.name
+
+admin.site.register(Region)
+

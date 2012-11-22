@@ -8,7 +8,7 @@ from tastypie import fields
 from wallet_wiki.models import *
 
 
-class User_Resource(ModelResource):
+class UserResource(ModelResource):
 	class Meta:
 		resource_name          = 'user'
 		queryset               = UserProfile.objects.all()
@@ -20,28 +20,51 @@ class User_Resource(ModelResource):
 			'nickname': ('exact', ),
 			'email': ('exact', ),
 		}
-		authentication = Authentication()
-		authentication = Authorization()
+		# authentication = Authentication()
+		# authentication = Authorization()
+
+	def dehydrate(self, bundle):
+		# GET A CATEGORY'S SONS! ******************************************
+		# sons = Category.objects.filter(parent=bundle.data['id'])
+		# bundle.data['sons'] = [model_to_dict(c) for c in sons]
+		# for c in sons:
+		# 	print c
+
+		# this = UserProfile.objects.get(id=bundle.data['id'])
+		# fans = UserProfile.objects.filter(following=bundle.data['id'])
+		# bundle.data['fans'] = [model_to_dict(c) for c in fans]
+		# return bundle
+		pass
 
 
-
-class Inbox_Resource(ModelResource):
+class InboxResource(ModelResource):
 	pass
 
 
 
-class Inbox_item_Resource(ModelResource):
+class InboxItemResource(ModelResource):
 	pass
 
 
 
-class Category_Resource(ModelResource):
-	parent_category = fields.ForeignKey('wallet_wiki.resources.Category_Resource', 'parent_category')
+class CategoryResource(ModelResource):
+	# parent_category = fields.ToManyField('wallet_wiki.resources.CategoryResource', 'parent', full=True)
 
-	# def dehydrate(self, bundle):
-	# 	sons = Category.objects.filter(category_name=bundle.data['category_name'])
-	# 	bundle.data['sons'] = [model_to_dict(c) for c in sons]
-	# 	return bundle
+	def dehydrate(self, bundle):
+		# GET A CATEGORY'S SONS! ******************************************
+		# sons = Category.objects.filter(parent=bundle.data['id'])
+		# bundle.data['sons'] = [model_to_dict(c) for c in sons]
+		# for c in sons:
+		# 	print c
+		# GET A CATEGORY'S PARENT *****************************************
+		this = Category.objects.get(id=bundle.data['id'])
+		p = this.parent
+		print p	
+		if p is not None:
+			bundle.data['parent'] = model_to_dict(p)
+		else:
+			bundle.data['parent'] = 'None'
+		return bundle
 
 	# def dehydrate_category_name(self, bundle):
 	# 	return bundle.data['category_name'].upper()
@@ -60,8 +83,8 @@ class Category_Resource(ModelResource):
 
 
 
-class Keyword_Resource(ModelResource):
-	author = fields.ForeignKey('wallet_wiki.resources.User_Resource', 'author')
+class KeywordResource(ModelResource):
+	# author = fields.ForeignKey('wallet_wiki.resources.User_Resource', 'author')
 
 	class Meta:
 		resource_name          = 'keyword'
@@ -77,15 +100,15 @@ class Keyword_Resource(ModelResource):
 
 
 
-class Article_meta_Resource(ModelResource):
+class ArticleMetaResource(ModelResource):
 	category = fields.ToManyField('wallet_wiki.resources.Category_Resource', 'category')
-	# keyword = fields.ToManyField('wallet_wiki.resources.Keyword_Resource', 'article_meta_keyword')
-	sited_article = fields.ToManyField('wallet_wiki.resources.Article_meta_Resource', 'article_meta_sited_article', full=True)
+	keyword = fields.ToManyField('wallet_wiki.resources.Keyword_Resource', 'article_meta_keyword')
+	# sited_article = fields.ToManyField('wallet_wiki.resources.Article_meta_Resource', 'article_meta_sited_article', full=True)
 	siting_article = fields.ToManyField('wallet_wiki.resources.Article_meta_Resource', 'article_meta_siting_article', full=True)
 
 	class Meta:
 		resource_name          = 'article_meta'
-		queryset               = Article_meta.objects.all()
+		queryset               = ArticleMeta.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
 
@@ -95,7 +118,7 @@ class Article_meta_Resource(ModelResource):
 
 
 
-class Article_Resource(ModelResource):
+class ArticleResource(ModelResource):
 	meta = fields.ForeignKey('wallet_wiki.resources.Article_meta_Resource', 'meta', full=True)
 
 	class Meta:
@@ -109,27 +132,27 @@ class Article_Resource(ModelResource):
 		
 
 
-class Draft_Resource(ModelResource):
+class DraftResource(ModelResource):
 	pass
 
 
 
-class Collection_Resource(ModelResource):
+class CollectionResource(ModelResource):
 	pass
 
 
 
-class Comment_Resource(ModelResource):
+class CommentResource(ModelResource):
 	pass
 
 
 
-class Attachment_Resource(ModelResource):
+class AttachmentResource(ModelResource):
 	pass
 
 
 
-class Message_Resource(ModelResource):
+class MessageResource(ModelResource):
 	pass
 
 
@@ -146,7 +169,6 @@ class TicketResource(ModelResource):
     def dehydrate(self, bundle):
         comments = TicketComment.objects.filter(ticket=bundle.data['id'])
         bundle.data['comments'] = [model_to_dict(c) for c in comments]
-        # print '\n@#>> ', bundle, '\n**&*\n'
         return bundle
 
 class TicketCommentResource(ModelResource):
