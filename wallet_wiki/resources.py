@@ -9,6 +9,7 @@ from wallet_wiki.models import *
 
 
 class UserResource(ModelResource):
+	following = fields.ToManyField('self', 'following', null=True)
 	class Meta:
 		resource_name          = 'user'
 		queryset               = UserProfile.objects.all()
@@ -24,17 +25,15 @@ class UserResource(ModelResource):
 		# authentication = Authorization()
 
 	def dehydrate(self, bundle):
-		# GET A CATEGORY'S SONS! ******************************************
-		# sons = Category.objects.filter(parent=bundle.data['id'])
-		# bundle.data['sons'] = [model_to_dict(c) for c in sons]
-		# for c in sons:
-		# 	print c
-
-		# this = UserProfile.objects.get(id=bundle.data['id'])
-		# fans = UserProfile.objects.filter(following=bundle.data['id'])
-		# bundle.data['fans'] = [model_to_dict(c) for c in fans]
-		# return bundle
-		pass
+		this = UserProfile.objects.get(id=bundle.data['id'])
+		print this
+		fans = this.following_set.all()
+		print fans
+		if fans is not None:
+			bundle.data['fans'] = [model_to_dict(c) for c in fans]
+		else:
+			bundle.data['fans'] = 'None'
+		return bundle	
 
 
 class InboxResource(ModelResource):
@@ -48,23 +47,23 @@ class InboxItemResource(ModelResource):
 
 
 class CategoryResource(ModelResource):
-	# parent_category = fields.ToManyField('wallet_wiki.resources.CategoryResource', 'parent', full=True)
+	parent_category = fields.ForeignKey('self', 'parent', null=True, full=True)
 
-	def dehydrate(self, bundle):
-		# GET A CATEGORY'S SONS! ******************************************
-		# sons = Category.objects.filter(parent=bundle.data['id'])
-		# bundle.data['sons'] = [model_to_dict(c) for c in sons]
-		# for c in sons:
-		# 	print c
-		# GET A CATEGORY'S PARENT *****************************************
-		this = Category.objects.get(id=bundle.data['id'])
-		p = this.parent
-		print p	
-		if p is not None:
-			bundle.data['parent'] = model_to_dict(p)
-		else:
-			bundle.data['parent'] = 'None'
-		return bundle
+	# def dehydrate(self, bundle):
+	# 	# GET A CATEGORY'S SONS! ******************************************
+	# 	# sons = Category.objects.filter(parent=bundle.data['id'])
+	# 	# bundle.data['sons'] = [model_to_dict(c) for c in sons]
+	# 	# for c in sons:
+	# 	# 	print c
+	# 	# GET A CATEGORY'S PARENT *****************************************
+	# 	this = Category.objects.get(id=bundle.data['id'])
+	# 	p = this.parent
+	# 	print p	
+	# 	if p is not None:
+	# 		bundle.data['parent'] = model_to_dict(p)
+	# 	else:
+	# 		bundle.data['parent'] = 'None'
+	# 	return bundle
 
 	# def dehydrate_category_name(self, bundle):
 	# 	return bundle.data['category_name'].upper()

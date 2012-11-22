@@ -11,8 +11,7 @@ class UserProfile(User):
 
 	user      = models.OneToOneField(User, related_name='user')
 	nickname  = models.CharField(max_length=50)
-	# fans      = models.ManyToManyField('UserProfile', related_name='user_fans', blank=True, null=True)
-	following = models.ForeignKey('UserProfile', related_name='user_following', blank=True, null=True)
+	following = models.ManyToManyField('UserProfile', blank=True, null=True)
 	portrait  = models.ImageField(upload_to=portrait_path, blank=True, null=True)
 
 	def __unicode__(self):
@@ -22,9 +21,27 @@ class UserProfile(User):
 		if created:
 			UserProfile.objects.create(user=instance)
 	post_save.connect(create_user_addition, sender=User)
-	
 
 admin.site.register(UserProfile)
+
+
+
+# To add UserProfile's fileds to Django-User-Admin Web Interface ---------------------------------
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+# Define an inline admin descriptor for UserProfile model
+# which acts a bit like a singleton
+class UserProfileInline(admin.StackedInline):
+	model               = UserProfile
+	can_delete          = False
+	verbose_name_plural = 'profile'
+# Define a new User admin
+class UserAdmin(UserAdmin):
+    inlines = (UserProfileInline, )
+# Re-register UserAdmin
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+# -------------------------------------------------------------------------------------------------
 
 
 
@@ -74,9 +91,8 @@ class ArticleMeta(models.Model):
 	title          = models.CharField(max_length=200)
 	category       = models.ManyToManyField('Category')
 	author         = models.ForeignKey('UserProfile')
-	keyword        = models.ManyToManyField('Keyword', related_name='article_meta_keyword', blank=True, null=True)
-	# sited_article  = models.ManyToManyField('Article_meta', related_name='article_meta_sited_article', blank=True, null=True)
-	siting_article = models.ManyToManyField('ArticleMeta', related_name='article_meta_siting_article', blank=True, null=True)
+	keyword        = models.ManyToManyField('Keyword', blank=True, null=True)
+	siting_article = models.ManyToManyField('ArticleMeta', blank=True, null=True)
 
 	def __unicode__(self):
 		return  'META -' + str(self.title)
@@ -139,8 +155,8 @@ class Attachment(models.Model):
 
 
 class Message(models.Model):
-	from_user = models.ForeignKey('UserProfile', related_name='message_from_user')
-	to_user   = models.ForeignKey('UserProfile', related_name='message_to_user')
+	from_user = models.OneToOneField('UserProfile', related_name='from_user')
+	to_user   = models.OneToOneField('UserProfile', related_name='to_user')
 	content   = models.TextField()
 	time      = models.DateTimeField(auto_now=True)
 	has_read  = models.BooleanField()
