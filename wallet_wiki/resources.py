@@ -2,7 +2,7 @@ from django.db import models
 from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
 from tastypie.resources import ModelResource
-from tastypie.authentication import Authentication,BasicAuthentication
+from tastypie.authentication import Authentication, BasicAuthentication
 from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie import fields
 from wallet_wiki.models import *
@@ -15,22 +15,22 @@ class UserResource(ModelResource):
 		queryset               = UserProfile.objects.all()
 		list_allowed_methods   = ['get', 'post']	
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
-		excludes               = ['password']
+		excludes               = ['password', 'date_joined', 'is_active', 'is_staff', 'last_login', 'first_name', 'last_name']
 		filtering = {
 			'username': ('exact', ),
 			'nickname': ('exact', ),
 			'email': ('exact', ),
 		}
-		# authentication = Authentication()
-		# authentication = Authorization()
+		authentication = BasicAuthentication()
+		authentication = Authorization()
 
 	def dehydrate(self, bundle):
 		this = UserProfile.objects.get(id=bundle.data['id'])
-		print this
-		fans = this.following_set.all()
-		print fans
+		fans = this.userprofile_set.all()
 		if fans is not None:
-			bundle.data['fans'] = [model_to_dict(c) for c in fans]
+			bundle.data['fans'] = []
+			for c in fans:
+				bundle.data['fans'].append(c.get_absolute_url())
 		else:
 			bundle.data['fans'] = 'None'
 		return bundle	

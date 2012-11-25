@@ -11,7 +11,7 @@ class UserProfile(User):
 
 	user      = models.OneToOneField(User, related_name='user')
 	nickname  = models.CharField(max_length=50)
-	following = models.ManyToManyField('UserProfile', blank=True, null=True)
+	following = models.ManyToManyField('self', blank=True, null=True, symmetrical=False)
 	portrait  = models.ImageField(upload_to=portrait_path, blank=True, null=True)
 
 	def __unicode__(self):
@@ -21,6 +21,10 @@ class UserProfile(User):
 		if created:
 			UserProfile.objects.create(user=instance)
 	post_save.connect(create_user_addition, sender=User)
+
+	def get_absolute_url(self):
+		from wallet.urls import v1_api
+		return '/api/' + v1_api.api_name + '/user/' + str(self.id) + '/'
 
 admin.site.register(UserProfile)
 

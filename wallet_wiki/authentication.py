@@ -3,8 +3,7 @@ from tastypie.authentication import Authentication
 from wallet_wiki.models import User
 # import hashlib
 
-
-class UserAuthentication(Authentication):
+class WalletAuthentication(Authentication):
 	def is_authentication(self, request, **kwargs):
 		req_username = request.user.username
 		req_pwd = request.user.password
@@ -17,7 +16,7 @@ class UserAuthentication(Authentication):
  
 
 
-class UserAuthorization():
+class WalletAuthorization():
 	pass
 
 
