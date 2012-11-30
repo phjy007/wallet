@@ -5,47 +5,28 @@ from django.contrib.auth.models import User
 import os
 
 # Create your models here.
-class UserProfile(User):
+class UserProfile(models.Model):
 	def portrait_path(instance, filename):
 		return os.path.join('user', str(instance.username), 'portrait', filename)
 
-	user      = models.OneToOneField(User, related_name='user')
+	user      = models.OneToOneField(User)
 	nickname  = models.CharField(max_length=50)
 	following = models.ManyToManyField('self', blank=True, null=True, symmetrical=False)
 	portrait  = models.ImageField(upload_to=portrait_path, blank=True, null=True)
 
 	def __unicode__(self):
-		return self.username
+		return "%s's profile" % self.user 
 
-	def create_user_addition(sender, instance, created, **kwargs):
-		if created:
-			UserProfile.objects.create(user=instance)
-	post_save.connect(create_user_addition, sender=User)
+	def create_user_profile(sender, instance, created, **kwargs):
+		if created:  
+			profile, created = UserProfile.objects.get_or_create(user=instance)
+	post_save.connect(create_user_profile, sender=User)
 
 	def get_absolute_url(self):
 		from wallet.urls import v1_api
 		return '/api/' + v1_api.api_name + '/user/' + str(self.id) + '/'
 
 admin.site.register(UserProfile)
-
-
-
-# To add UserProfile's fileds to Django-User-Admin Web Interface ---------------------------------
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
-# Define an inline admin descriptor for UserProfile model
-# which acts a bit like a singleton
-class UserProfileInline(admin.StackedInline):
-	model               = UserProfile
-	can_delete          = False
-	verbose_name_plural = 'profile'
-# Define a new User admin
-class UserAdmin(UserAdmin):
-    inlines = (UserProfileInline, )
-# Re-register UserAdmin
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
-# -------------------------------------------------------------------------------------------------
 
 
 
@@ -80,7 +61,7 @@ class Category(models.Model):
 
 class Keyword(models.Model):
 	keyword_name = models.CharField(max_length=20)
-	author       = models.ForeignKey('UserProfile')
+	author       = models.ForeignKey('UserProfile', null=False, blank=False)
 
 	def __unicode__(self):
 		return self.keyword_name
@@ -99,7 +80,11 @@ class ArticleMeta(models.Model):
 	siting_article = models.ManyToManyField('ArticleMeta', blank=True, null=True)
 
 	def __unicode__(self):
-		return  'META -' + str(self.title)
+		return str(self.title)
+
+	def get_absolute_url(self):
+		from wallet.urls import v1_api
+		return '/api/' + v1_api.api_name + '/ariticle_meta/' + str(self.id) + '/'
 
 
 
@@ -111,7 +96,11 @@ class Article(models.Model):
 	is_draft   = models.BooleanField(default=False)
 
 	def __unicode__(self):
-		return 'ARTICLE -' + str(self.meta.title)
+		return str(self.meta.title) + ' v' + str(self.version)
+
+	def get_absolute_url(self):
+		from wallet.urls import v1_api
+		return '/api/' + v1_api.api_name + '/ariticle/' + str(self.id) + '/'
 
 
 admin.site.register(ArticleMeta)

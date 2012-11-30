@@ -1,0 +1,16 @@
+../quick_gen_project_wallet_autogen.sh
+../.vimfiles.wallet/quick_gen_project_pre_custom.sh
+../.vimfiles.wallet/quick_gen_project_post_custom.sh
+../manage.py
+../quick_gen_project_autogen.sh
+../wallet/wsgi.py
+../wallet/urls.py
+../wallet/settings.py
+../wallet/__init__.py
+../wallet_wiki/tests.py
+../wallet_wiki/resources.py
+../wallet_wiki/views.py
+../wallet_wiki/__init__.py
+../wallet_wiki/models.py
+../wallet_wiki/authentication.py
+../wallet_wiki/authorization.py

@@ -10,6 +10,7 @@ from wallet_wiki.models import *
 
 class UserResource(ModelResource):
 	following = fields.ToManyField('self', 'following', null=True)
+
 	class Meta:
 		resource_name          = 'user'
 		queryset               = UserProfile.objects.all()
@@ -22,7 +23,7 @@ class UserResource(ModelResource):
 			'email': ('exact', ),
 		}
 		authentication = BasicAuthentication()
-		authentication = Authorization()
+		authorization  = DjangoAuthorization()
 
 	def dehydrate(self, bundle):
 		this = UserProfile.objects.get(id=bundle.data['id'])
@@ -49,6 +50,18 @@ class InboxItemResource(ModelResource):
 class CategoryResource(ModelResource):
 	parent_category = fields.ForeignKey('self', 'parent', null=True, full=True)
 
+	class Meta:
+		resource_name          = 'category'
+		queryset               = Category.objects.all()
+		list_allowed_methods   = ['get', 'post']
+		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		filtering = {
+			'category_name': ('exact', ),
+		}
+
+	authentication = Authentication()
+	authorization  = Authorization()
+
 	# def dehydrate(self, bundle):
 	# 	# GET A CATEGORY'S SONS! ******************************************
 	# 	# sons = Category.objects.filter(parent=bundle.data['id'])
@@ -68,22 +81,10 @@ class CategoryResource(ModelResource):
 	# def dehydrate_category_name(self, bundle):
 	# 	return bundle.data['category_name'].upper()
 
-	class Meta:
-		resource_name          = 'category'
-		queryset               = Category.objects.all()
-		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
-		filtering = {
-			'category_name': ('exact', ),
-		}
-
-	authentication = Authentication()
-	authentication = Authorization()
-
 
 
 class KeywordResource(ModelResource):
-	# author = fields.ForeignKey('wallet_wiki.resources.User_Resource', 'author')
+	keyword_author = fields.ToOneField('wallet_wiki.resources.UserResource', 'author', null=False, full=True)
 
 	class Meta:
 		resource_name          = 'keyword'
@@ -95,15 +96,15 @@ class KeywordResource(ModelResource):
 		}
 
 	authentication = Authentication()
-	authentication = Authorization()
+	authorization  = Authorization()
 
 
 
 class ArticleMetaResource(ModelResource):
-	category = fields.ToManyField('wallet_wiki.resources.Category_Resource', 'category')
-	keyword = fields.ToManyField('wallet_wiki.resources.Keyword_Resource', 'article_meta_keyword')
-	# sited_article = fields.ToManyField('wallet_wiki.resources.Article_meta_Resource', 'article_meta_sited_article', full=True)
-	siting_article = fields.ToManyField('wallet_wiki.resources.Article_meta_Resource', 'article_meta_siting_article', full=True)
+	category       = fields.ToManyField('wallet_wiki.resources.CategoryResource', 'category', null=True, full=False)
+	keyword        = fields.ToManyField('wallet_wiki.resources.KeywordResource', 'keyword', null=True, full=False)
+	siting_article = fields.ToManyField('wallet_wiki.resources.ArticleMetaResource', 'siting_article', null=False, full=False)
+	author         = fields.ForeignKey('wallet_wiki.resources.UserResource', 'author', null=False, full=False)
 
 	class Meta:
 		resource_name          = 'article_meta'
@@ -112,13 +113,30 @@ class ArticleMetaResource(ModelResource):
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
 
 	authentication = Authentication()
-	authentication = Authorization()
+	authorization  = Authorization()
 		
+	def dehydrate(self, bundle):
+		this = ArticleMeta.objects.get(id=bundle.data['id'])
+		# get articles belonging to this article meta
+		versions = this.article_set.all()
+		if versions is not None:
+			bundle.data['versions'] = []
+			for c in versions:
+				bundle.data['versions'].append(c.get_absolute_url())
+		else:
+			bundle.data['versions'] = 'None'
+		# get sited articles
+		sited_articles = this.articlemeta_set.all()
+		if sited_articles is not None:
+			bundle.data['sited_articles'] = []
+			for c in sited_articles:
+				bundle.data['sited_articles'].append(c.get_absolute_url())
+		return bundle	
 
 
 
 class ArticleResource(ModelResource):
-	meta = fields.ForeignKey('wallet_wiki.resources.Article_meta_Resource', 'meta', full=True)
+	meta = fields.ForeignKey('wallet_wiki.resources.ArticleMetaResource', 'meta', null=False, full=False)
 
 	class Meta:
 		resource_name          = 'article'
@@ -127,12 +145,8 @@ class ArticleResource(ModelResource):
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
 
 	authentication = Authentication()
-	authentication = Authorization()
+	authorization  = Authorization()
 		
-
-
-class DraftResource(ModelResource):
-	pass
 
 
 
