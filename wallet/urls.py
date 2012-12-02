@@ -13,9 +13,13 @@ v1_api.register(CategoryResource())
 v1_api.register(KeywordResource())
 v1_api.register(ArticleMetaResource())
 v1_api.register(ArticleResource())
+v1_api.register(CollectionResource())
+v1_api.register(CommentResource())
+v1_api.register(AttachmentResource())
 
-v1_api.register(TicketResource())
-v1_api.register(TicketCommentResource())
+# Just for test
+# v1_api.register(TicketResource())
+# v1_api.register(TicketCommentResource())
 
 
 urlpatterns = patterns('',

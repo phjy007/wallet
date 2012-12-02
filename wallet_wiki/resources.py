@@ -37,13 +37,11 @@ class UserResource(ModelResource):
 		return bundle	
 
 
+
+
 class InboxResource(ModelResource):
 	pass
 
-
-
-class InboxItemResource(ModelResource):
-	pass
 
 
 
@@ -131,6 +129,8 @@ class ArticleMetaResource(ModelResource):
 			bundle.data['sited_articles'] = []
 			for c in sited_articles:
 				bundle.data['sited_articles'].append(c.get_absolute_url())
+		else:
+			bundle.data['sited_articles'] = 'None'
 		return bundle	
 
 
@@ -144,6 +144,17 @@ class ArticleResource(ModelResource):
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
 
+	def dehydrate(self, bundle):
+		this = Article.objects.get(id=bundle.data['id'])
+		comments = this.comment_set.all()
+		if comments is not None:
+			bundle.data['comments'] = []
+			for c in comments:
+				bundle.data['comments'].append(c.get_absolute_url())
+		else:
+			bundle.data['comments'] = 'None'
+		return bundle
+
 	authentication = Authentication()
 	authorization  = Authorization()
 		
@@ -151,17 +162,47 @@ class ArticleResource(ModelResource):
 
 
 class CollectionResource(ModelResource):
-	pass
+	meta      = fields.ForeignKey('wallet_wiki.resources.ArticleMetaResource', 'article_meta', null=False, full=True)
+	belong_to = fields.ForeignKey('wallet_wiki.resources.UserResource', 'belong_to', null=False, full=True)
+	keyword   = fields.ToManyField('wallet_wiki.resources.KeywordResource', 'keyword', null=False, full=True)
 
+	class Meta:
+		resource_name          = 'collection'
+		queryset               = Collection.objects.all()
+		list_allowed_methods   = ['get', 'post']
+		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+
+	authentication = Authentication()
+	authorization  = Authorization()
+		
 
 
 class CommentResource(ModelResource):
-	pass
+	author  = fields.ForeignKey('wallet_wiki.resources.UserResource', 'author', null=False, full=False)	
+	article = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=False)
+
+	class Meta:
+		resource_name          = 'comment'
+		queryset               = Comment.objects.all()
+		list_allowed_methods   = ['get', 'post']
+		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+
+	authentication = Authentication()
+	authorization  = Authorization()
 
 
 
 class AttachmentResource(ModelResource):
-	pass
+	article = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=False)
+
+	class Meta:
+		resource_name          = 'attachment'
+		queryset               = Attachment.objects.all()
+		list_allowed_methods   = ['get', 'post']
+		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+
+	authentication = Authentication()
+	authorization  = Authorization()
 
 
 
@@ -171,22 +212,29 @@ class MessageResource(ModelResource):
 
 
 
+class ArticleEventResource(ModelResource):
+	pass
+
+
+
+
+
 
 #Just for test
-class TicketResource(ModelResource):
+# class TicketResource(ModelResource):
 
-    class Meta:
-        queryset = Ticket.objects.all()
-        resource_name = 'ticket'
+#     class Meta:
+#         queryset = Ticket.objects.all()
+#         resource_name = 'sample_ticket'
 
-    def dehydrate(self, bundle):
-        comments = TicketComment.objects.filter(ticket=bundle.data['id'])
-        bundle.data['comments'] = [model_to_dict(c) for c in comments]
-        return bundle
+#     def dehydrate(self, bundle):
+#         comments = TicketComment.objects.filter(ticket=bundle.data['id'])
+#         bundle.data['comments'] = [model_to_dict(c) for c in comments]
+#         return bundle
 
-class TicketCommentResource(ModelResource):
-    ticket = fields.ForeignKey(TicketResource, 'ticket', full=True)
+# class TicketCommentResource(ModelResource):
+#     ticket = fields.ForeignKey(TicketResource, 'ticket', full=True)
 
-    class Meta:
-        queryset = TicketComment.objects.all()
-        resource_name = 'comment'
+#     class Meta:
+#         queryset = TicketComment.objects.all()
+#         resource_name = 'sample_comment'
