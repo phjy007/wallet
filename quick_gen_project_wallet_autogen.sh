@@ -1,6 +1,6 @@
 #!/bin/sh
 export script_type="autogen"
-export EX_DEV="~/exdev"
+export EX_DEV="~/.vim"
 export cwd=${PWD}
 export toolkit_path=/home/arthur/.toolkit
 export lang_type="c cpp c# javascript java shader python lua vim uc matlab wiki ini make sh batch debug qt swig"

@@ -8,6 +8,7 @@
 ../wallet/settings.py
 ../wallet/__init__.py
 ../wallet_wiki/tests.py
+../wallet_wiki/admin.py
 ../wallet_wiki/resources.py
 ../wallet_wiki/views.py
 ../wallet_wiki/__init__.py

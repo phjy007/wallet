@@ -5,6 +5,12 @@ from django.contrib.auth.models import User
 import os
 
 
+FEEDEVENT_TYPE_CHOICE = (
+	('undef', u'undef'),
+	('article', u'article'),
+	('collection', u'collection'),
+)
+
 ARTICLE_ACTION_CHOICES = (
 	('create', u'create'),
 	('update', u'update'),
@@ -45,8 +51,10 @@ admin.site.register(UserProfile)
 
 
 
-# Inbox is the contatin for FeedMessages
-INBOX_MAX_ITEM = 2
+# The size of inbox
+INBOX_MAX_ITEM = 50
+
+# Inbox is the contatiner for FeedMessages
 class Inbox(models.Model):
 	user = models.OneToOneField('UserProfile')
 
@@ -129,7 +137,7 @@ def article_post_save_callbalck(sender, instance, created, **kwargs):
 					action = ARTICLE_ACTION_CHOICES[0][1] # create a new article
 				else:
 					action = ARTICLE_ACTION_CHOICES[1][1] # update a new version of certain article
-				article_event = ArticleEvent.objects.create(inbox=inbox, action=action, article=instance)
+				article_event = ArticleEvent.objects.create(inbox=inbox, action=action, article=instance, event_type='article')
 				article_event.save
 
 post_save.connect(article_post_save_callbalck, dispatch_uid="my_unique_identifier_2")
@@ -171,7 +179,7 @@ def collect_post_save_callbalck(sender, instance, created, **kwargs):
 						# 	print a.time
 						oldest_event = feedevent_list[INBOX_MAX_ITEM-1]
 						oldest_event.delete()
-					collection_event = CollectionEvent.objects.create(inbox=inbox, collection=instance)
+					collection_event = CollectionEvent.objects.create(inbox=inbox, collection=instance, event_type='collection')
 					collection_event.save
 
 post_save.connect(collect_post_save_callbalck)#, dispatch_uid="my_unique_identifier_3"
@@ -234,6 +242,7 @@ class Message(models.Model):
 class FeedEvent(models.Model):
 	inbox = models.ForeignKey('Inbox')
 	time  = models.DateTimeField(auto_now=True)
+	event_type = models.CharField(max_length=20, default='undef',  choices=FEEDEVENT_TYPE_CHOICE)
 
 	class Meta:
 		ordering = ['-time']
@@ -245,6 +254,10 @@ class ArticleEvent(FeedEvent):
 	def __unicode__(self):
 		return self.inbox.user.user.username + '\'s ARTICLE FEED: ' + self.article.meta.title + ' ----> ACTION: ' + self.action
 
+	def get_absolute_url(self):
+		from wallet.urls import v1_api
+		return '/api/' + v1_api.api_name + '/articleevent/' + str(self.id) + '/'
+
 
 # Public collection action will be posted to the inboxes of collector's fans
 class CollectionEvent(FeedEvent):
@@ -252,6 +265,10 @@ class CollectionEvent(FeedEvent):
 
 	def __unicode__(self):
 		return self.inbox.user.user.username + '\'s COLLECTION FEED: ' + ' collects ' + str(self.collection)
+
+	def get_absolute_url(self):
+		from wallet.urls import v1_api
+		return '/api/' + v1_api.api_name + '/collectionevent/' + str(self.id) + '/'
 
 
 # can be extended

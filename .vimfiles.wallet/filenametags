@@ -1,0 +1,16 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+__init__.py	../wallet/__init__.py	1
+__init__.py	../wallet_wiki/__init__.py	1
+admin.py	../wallet_wiki/admin.py	1
+authentication.py	../wallet_wiki/authentication.py	1
+authorization.py	../wallet_wiki/authorization.py	1
+manage.py	../manage.py	1
+models.py	../wallet_wiki/models.py	1
+quick_gen_project_autogen.sh	../quick_gen_project_autogen.sh	1
+quick_gen_project_wallet_autogen.sh	../quick_gen_project_wallet_autogen.sh	1
+resources.py	../wallet_wiki/resources.py	1
+settings.py	../wallet/settings.py	1
+tests.py	../wallet_wiki/tests.py	1
+urls.py	../wallet/urls.py	1
+views.py	../wallet_wiki/views.py	1
+wsgi.py	../wallet/wsgi.py	1

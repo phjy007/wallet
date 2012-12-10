@@ -1,0 +1,6 @@
+badd wallet_wiki/models.py
+badd wallet_wiki/resources.py
+badd wallet/urls.py
+badd wallet/settings.py
+edit wallet_wiki/resources.py
+call cursor(90,1)
