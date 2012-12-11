@@ -23,7 +23,7 @@ class UserProfile(models.Model):
 		return os.path.join('user', str(instance.user.username), 'portrait', filename)
 
 	user      = models.OneToOneField(User)
-	nickname  = models.CharField(max_length=50)
+	nickname  = models.CharField(max_length=50, unique=True)
 	following = models.ManyToManyField('self', blank=True, null=True, symmetrical=False)
 	portrait  = models.ImageField(upload_to=portrait_path, blank=True, null=True)
 
@@ -82,6 +82,9 @@ class Keyword(models.Model):
 	def __unicode__(self):
 		return self.keyword_name
 
+	class Meta:
+		unique_together = (('keyword_name', 'author'),)
+
 
 admin.site.register(Category)
 admin.site.register(Keyword)
@@ -102,6 +105,9 @@ class ArticleMeta(models.Model):
 		from wallet.urls import v1_api
 		return '/api/' + v1_api.api_name + '/article_meta/' + str(self.id) + '/'
 
+	class Meta:
+		unique_together = (('title', 'author'),)
+
 
 
 class Article(models.Model):
@@ -117,6 +123,9 @@ class Article(models.Model):
 	def get_absolute_url(self):
 		from wallet.urls import v1_api
 		return '/api/' + v1_api.api_name + '/article/' + str(self.id) + '/'
+
+	class Meta:
+		unique_together = (('meta', 'version'),)
 
 def article_post_save_callbalck(sender, instance, created, **kwargs):
 	if issubclass(sender, Article):
@@ -137,7 +146,7 @@ def article_post_save_callbalck(sender, instance, created, **kwargs):
 					action = ARTICLE_ACTION_CHOICES[0][1] # create a new article
 				else:
 					action = ARTICLE_ACTION_CHOICES[1][1] # update a new version of certain article
-				article_event = ArticleEvent.objects.create(inbox=inbox, action=action, article=instance, event_type='article')
+				article_event = FeedEvent.objects.create(inbox=inbox, action=action, article=instance, event_type='article')
 				article_event.save
 
 post_save.connect(article_post_save_callbalck, dispatch_uid="my_unique_identifier_2")
@@ -161,6 +170,9 @@ class Collection(models.Model):
 
 	class Meta:
 		ordering = ['belong_to', '-collect_time']
+	
+	class Meta:
+		unique_together = (('article', 'belong_to'),)
 
 def collect_post_save_callbalck(sender, instance, created, **kwargs):
 	if issubclass(sender, Collection):
@@ -179,7 +191,7 @@ def collect_post_save_callbalck(sender, instance, created, **kwargs):
 						# 	print a.time
 						oldest_event = feedevent_list[INBOX_MAX_ITEM-1]
 						oldest_event.delete()
-					collection_event = CollectionEvent.objects.create(inbox=inbox, collection=instance, event_type='collection')
+					collection_event = FeedEvent.objects.create(inbox=inbox, collection=instance, event_type='collection')
 					collection_event.save
 
 post_save.connect(collect_post_save_callbalck)#, dispatch_uid="my_unique_identifier_3"
@@ -229,6 +241,7 @@ class Message(models.Model):
 	content   = models.TextField()
 	has_read  = models.BooleanField(default=False)
 	time      = models.DateTimeField(auto_now=True)
+	is_system_msg = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.from_user.user.username + ' -> ' + self.to_user.user.username
@@ -243,49 +256,64 @@ class FeedEvent(models.Model):
 	inbox = models.ForeignKey('Inbox')
 	time  = models.DateTimeField(auto_now=True)
 	event_type = models.CharField(max_length=20, default='undef',  choices=FEEDEVENT_TYPE_CHOICE)
+	# article event
+ 	action  = models.CharField(max_length=20, default='create', choices=ARTICLE_ACTION_CHOICES)
+ 	article = models.ForeignKey('Article', null=True, blank=True)	
+	# collection event
+ 	collection = models.ForeignKey('Collection', null=True, blank=True)
 
 	class Meta:
 		ordering = ['-time']
 
-class ArticleEvent(FeedEvent):
-	action  = models.CharField(max_length=20, default='create', choices=ARTICLE_ACTION_CHOICES)
-	article = models.ForeignKey('Article')	
-
-	def __unicode__(self):
-		return self.inbox.user.user.username + '\'s ARTICLE FEED: ' + self.article.meta.title + ' ----> ACTION: ' + self.action
-
 	def get_absolute_url(self):
 		from wallet.urls import v1_api
-		return '/api/' + v1_api.api_name + '/articleevent/' + str(self.id) + '/'
+		return '/api/' + v1_api.api_name + '/feedevent/' + str(self.id) + '/'
+
+ 	def __unicode__(self):
+		if self.event_type == 'article':
+			return self.inbox.user.user.username + '\'s FEED: ' + self.article.meta.title + ' ----> TYPE: ' + self.event_type + ' ACTION: ' + self.action 
+		elif self.event_type == 'collection':
+			return self.inbox.user.user.username + '\'s FEED: ' + self.collection.article.meta.title + ' ----> TYPE: ' + self.event_type 
 
 
-# Public collection action will be posted to the inboxes of collector's fans
-class CollectionEvent(FeedEvent):
-	collection = models.ForeignKey('Collection')
-
-	def __unicode__(self):
-		return self.inbox.user.user.username + '\'s COLLECTION FEED: ' + ' collects ' + str(self.collection)
-
-	def get_absolute_url(self):
-		from wallet.urls import v1_api
-		return '/api/' + v1_api.api_name + '/collectionevent/' + str(self.id) + '/'
-
-
-# can be extended
-class CommentEvent(FeedEvent):
-	pass
-
-
-# can be extended
-class FollowEvent(FeedEvent):
-	pass
+# class ArticleEvent(FeedEvent):
+# 	action  = models.CharField(max_length=20, default='create', choices=ARTICLE_ACTION_CHOICES)
+# 	article = models.ForeignKey('Article')	
+# 
+# 	def __unicode__(self):
+# 		return self.inbox.user.user.username + '\'s ARTICLE FEED: ' + self.article.meta.title + ' ----> ACTION: ' + self.action
+# 
+# 	def get_absolute_url(self):
+# 		from wallet.urls import v1_api
+# 		return '/api/' + v1_api.api_name + '/articleevent/' + str(self.id) + '/'
+# 
+# 
+# # Public collection action will be posted to the inboxes of collector's fans
+# class CollectionEvent(FeedEvent):
+# 	collection = models.ForeignKey('Collection')
+# 
+# 	def __unicode__(self):
+# 		return self.inbox.user.user.username + '\'s COLLECTION FEED: ' + ' collects ' + str(self.collection)
+# 
+# 	def get_absolute_url(self):
+# 		from wallet.urls import v1_api
+# 		return '/api/' + v1_api.api_name + '/collectionevent/' + str(self.id) + '/'
+# 
+# 
+# # can be extended
+# class CommentEvent(FeedEvent):
+# 	pass
+# 
+# 
+# # can be extended
+# class FollowEvent(FeedEvent):
+# 	pass
 
 
 
 admin.site.register(Attachment)
 admin.site.register(Message)
-admin.site.register(ArticleEvent)
-admin.site.register(CollectionEvent)
+admin.site.register(FeedEvent)
 
 
 

@@ -315,7 +315,7 @@
 			"file": "wallet_wiki/models.py",
 			"settings":
 			{
-				"buffer_size": 9488,
+				"buffer_size": 10018,
 				"line_ending": "Unix"
 			}
 		},
@@ -323,7 +323,7 @@
 			"file": "wallet_wiki/resources.py",
 			"settings":
 			{
-				"buffer_size": 7370,
+				"buffer_size": 10338,
 				"line_ending": "Unix"
 			}
 		},
@@ -331,7 +331,7 @@
 			"file": "wallet/urls.py",
 			"settings":
 			{
-				"buffer_size": 1072,
+				"buffer_size": 1223,
 				"line_ending": "Unix"
 			}
 		}
@@ -343,16 +343,16 @@
 		"selected_items":
 		[
 			[
+				":w",
+				":w - Save"
+			],
+			[
 				"in",
 				"Package Control: Install Package"
 			],
 			[
 				"ins",
 				"Package Control: Install Package"
-			],
-			[
-				":w",
-				":w - Save"
 			],
 			[
 				":we",
@@ -739,7 +739,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -747,15 +747,15 @@
 					"file": "wallet_wiki/models.py",
 					"settings":
 					{
-						"buffer_size": 9488,
+						"buffer_size": 10018,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1424,
-								1424
+								0,
+								0
 							]
 						],
 						"settings":
@@ -764,7 +764,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 559.0,
+						"translation.y": 108.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -774,15 +774,15 @@
 					"file": "wallet_wiki/resources.py",
 					"settings":
 					{
-						"buffer_size": 7370,
+						"buffer_size": 10338,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7370,
-								7370
+								1349,
+								1349
 							]
 						],
 						"settings":
@@ -791,7 +791,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3402.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -801,15 +801,15 @@
 					"file": "wallet/urls.py",
 					"settings":
 					{
-						"buffer_size": 1072,
+						"buffer_size": 1223,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								558,
-								558
+								0,
+								0
 							]
 						],
 						"settings":

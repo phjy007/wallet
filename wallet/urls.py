@@ -17,8 +17,9 @@ v1_api.register(CollectionResource())
 v1_api.register(CommentResource())
 v1_api.register(AttachmentResource())
 v1_api.register(MessageResource())
-v1_api.register(ArticleEventResource())
-v1_api.register(CollectionEventResource())
+v1_api.register(FeedEventResource())
+# v1_api.register(ArticleEventResource())
+# v1_api.register(CollectionEventResource())
 v1_api.register(InboxResource())
 
 # Just for test
