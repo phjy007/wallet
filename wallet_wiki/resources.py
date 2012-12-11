@@ -6,10 +6,12 @@ from tastypie.resources import ModelResource
 from tastypie.authentication import Authentication, BasicAuthentication
 from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie import fields
+from tastypie.resources import ALL_WITH_RELATIONS
 from wallet_wiki.models import *
 
 
 class UserResource(ModelResource):
+	user = fields.ToOneField('wallet_wiki.resources.UserCoreResource', 'user', null=False, full=True)
 	following = fields.ToManyField('self', 'following', null=True, full=False)
 	inbox = fields.ToOneField('wallet_wiki.resources.InboxResource', 'inbox', null=False, full=False)
 	fans = fields.ToManyField('wallet_wiki.resources.UserResource', 'userprofile_set', null=True, full=False)
@@ -20,34 +22,58 @@ class UserResource(ModelResource):
 		key_field			   = 'nickname'
 		list_allowed_methods   = ['get', 'post']	
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
-		excludes			   = ['password', 'date_joined', 'is_active', 'is_staff', 'last_login', 'first_name', 'last_name']
 		filtering = {
-			'user.username': ('exact',),
-			'nickname': ('exact', 'startswith',),
+			'user': ALL_WITH_RELATIONS,
+			'nickname': ('exact', 'startswith', ),
 		}
-		authentication = BasicAuthentication()
-		authorization  = DjangoAuthorization()
+		# authentication = BasicAuthentication()
+		# authorization  = DjangoAuthorization()
+		authentication = Authentication()
+		authorization  = Authorization()
 
-	def prepend_urls(self):
+
+	def override_urls(self):
 	 	return [
-	 		url(r"^(?P<resource_name>%s)/(?P<nickname>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
+	 		url(r"^(?P<resource_name>%s)/(?P<user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
+	 	]
+		
+
+class UserCoreResource(ModelResource):
+
+	class Meta:
+		resource_name = 'user_core'
+		queryset = User.objects.all()
+		excludes = ['password', 'date_joined', 'is_active', 'is_staff', 'last_login', 'first_name', 'last_name']
+		filtering = {
+			'username': ('exact', ),		
+		}
+		
+		authentication = Authentication()
+		authorization  = Authorization()
+
+	def override_urls(self):
+	 	return [
+	 		url(r"^(?P<resource_name>%s)/(?P<username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
 	 	]
 
 
 
 class InboxResource(ModelResource):
 	user = fields.ToOneField('wallet_wiki.resources.UserResource', 'user', null=False, full=False)
-    feed_event = fields.ToManyField('wallet_wiki.resources.FeedEventResource', 'feedevent_set', null=True, full=True)
+	feed_event = fields.ToManyField('wallet_wiki.resources.FeedEventResource', 'feedevent_set', null=True, full=False)
 
 	class Meta:
 		resource_name = 'inbox'
 		queryset = Inbox.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		filtering = {
+			'user': ALL_WITH_RELATIONS,
+		}
 	
-	def prepend_urls(self):
+	def override_urls(self):
 		return [
-			url(r"^(?P<resource_name>%s)/(?P<user>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
+			url(r"^(?P<resource_name>%s)/(?P<user__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
 		]
 
 
@@ -67,33 +93,31 @@ class CategoryResource(ModelResource):
 	authentication = Authentication()
 	authorization  = Authorization()
 
-	def override_urls(self):
+	def prepend_urls(self):
 		return [
-			#url(r"^(?P<resource_name>%s)/(?P<category_name>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
 			url(r"^(?P<resource_name>%s)/(?P<category_name>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
 		]
 
 
 
 class KeywordResource(ModelResource):
-	keyword_author = fields.ToOneField('wallet_wiki.resources.UserResource', 'author', null=False, full=True)
+	keyword_author = fields.ToOneField('wallet_wiki.resources.UserResource', 'author', null=False, full=False)
 
 	class Meta:
 		resource_name		  = 'keyword'
 		queryset			   = Keyword.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
-		# filtering = {
-		# 	'keyword_name': ('exact', 'startswith', ),
-		# }
+		filtering = {
+			'user': ALL_WITH_RELATIONS,
+		}
 
 	authentication = Authentication()
 	authorization  = Authorization()
 	
 	def override_urls(self):
 		return [
-			#url(r"^(?P<resource_name>%s)/(?P<category_name>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
-			url(r"^(?P<resource_name>%s)/(?P<author>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
+			url(r"^(?P<resource_name>%s)/(?P<author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 		]
 
 
@@ -111,76 +135,46 @@ class ArticleMetaResource(ModelResource):
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
 		filtering = {
-			'title': ('exact',),
-			'author': ('exact', 'startswith',),
-			'category': ('exact',),
+			'id': ('exact', ),
+			'title': ('exact', 'startswith'),
+			'author': ALL_WITH_RELATIONS,
+			'category': ALL_WITH_RELATIONS,
 		}
 
 	authentication = Authentication()
 	authorization  = Authorization()
 		
-	# def dehydrate(self, bundle):
-	# 	this = ArticleMeta.objects.get(id=bundle.data['id'])
-	# 	# get articles belonging to this article meta
-	# 	versions = this.article_set.all()
-	# 	if versions is not None:
-	# 		bundle.data['versions'] = []
-	# 		for c in versions:
-	# 			bundle.data['versions'].append(c.get_absolute_url())
-	# 	else:
-	# 		bundle.data['versions'] = 'None'
-	# 	# get sited articles
-	# 	sited_articles = this.articlemeta_set.all()
-	# 	if sited_articles is not None:
-	# 		bundle.data['sited_articles'] = []
-	# 		for c in sited_articles:
-	# 			bundle.data['sited_articles'].append(c.get_absolute_url())
-	# 	else:
-	# 		bundle.data['sited_articles'] = 'None'
-	# 	return bundle	
-
 	def override_urls(self):
 		return [
-			#url(r"^(?P<resource_name>%s)/(?P<category_name>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
-			url(r"^(?P<resource_name>%s)/user/(?P<author>[\w\d_.-]+)/(?P<title>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
+			# url(r"^(?P<resource_name>%s)/(?P<author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
+			url(r"^(?P<resource_name>%s)/(?P<author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 		]
 
 
 
 class ArticleResource(ModelResource):
 	meta = fields.ForeignKey('wallet_wiki.resources.ArticleMetaResource', 'meta', null=False, full=False)
-	comments = fields.ToManyField('wallet_wiki.resources.CommentResource', 'comment_set', null=False, full=True)
-	attachments = fields.ToManyField('wallet_wiki.resources.AttachmentResource', 'attachment_set', null=False, full=True)
+	comments = fields.ToManyField('wallet_wiki.resources.CommentResource', 'comment_set', null=False, full=False)
+	attachments = fields.ToManyField('wallet_wiki.resources.AttachmentResource', 'attachment_set', null=False, full=False)
 
 	class Meta:
 		resource_name		  = 'article'
 		queryset			   = Article.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
-
-	# def dehydrate(self, bundle):
-	# 	this = Article.objects.get(id=bundle.data['id'])
-	# 	# add ForeignKey comment
-	# 	comments = this.comment_set.all()
-	# 	if comments is not None:
-	# 		bundle.data['comments'] = []
-	# 		for c in comments:
-	# 			bundle.data['comments'].append(c.get_absolute_url())
-	# 	else:
-	# 		bundle.data['comments'] = 'None'
-	# 	# add ForeignKey Attachment 
-	# 	attachments = this.attachment_set.all()
-	# 	if attachments is not None:
-	# 		bundle.data['attachments'] = []
-	# 		for c in attachments:
-	# 			bundle.data['attachments'].append(c.get_absolute_url())
-	# 	else:
-	# 		bundle.data['attachments'] = 'None'
-	# 	return bundle
+		filtering = {
+			'meta': ALL_WITH_RELATIONS,
+			'id': ('exact', ),
+		}
 
 	authentication = Authentication()
 	authorization  = Authorization()
 		
+	def override_urls(self):
+		return [
+			url(r"^(?P<resource_name>%s)/(?P<meta__author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
+		]
+
 
 
 class CollectionResource(ModelResource):
@@ -193,10 +187,18 @@ class CollectionResource(ModelResource):
 		queryset			   = Collection.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		filtering = {
+			'belong_to': ALL_WITH_RELATIONS,
+		}
 
 	authentication = Authentication()
 	authorization  = Authorization()
 		
+	def override_urls(self):
+		return [
+			url(r"^(?P<resource_name>%s)/(?P<belong_to__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
+		]
+
 
 
 class CommentResource(ModelResource):
@@ -208,9 +210,17 @@ class CommentResource(ModelResource):
 		queryset			   = Comment.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		filtering = {
+			'article': ALL_WITH_RELATIONS,
+		}
 
 	authentication = Authentication()
 	authorization  = Authorization()
+
+	def override_urls(self):
+		return [
+			url(r"^(?P<resource_name>%s)/(?P<article__id>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
+		]
 
 
 
@@ -222,9 +232,17 @@ class AttachmentResource(ModelResource):
 		queryset			   = Attachment.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		filtering = {
+			'article': ALL_WITH_RELATIONS,
+		}
 
 	authentication = Authentication()
 	authorization  = Authorization()
+
+	def override_urls(self):
+		return [
+			url(r"^(?P<resource_name>%s)/(?P<article__id>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
+		]
 
 
 
@@ -238,63 +256,42 @@ class MessageResource(ModelResource):
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
 		filtering = {
-			'from_user': ('exact',),
-			'to_user': ('exact',),
+			'from_user': ALL_WITH_RELATIONS,
+			'to_user': ALL_WITH_RELATIONS,
 		}
-
-	# TODO: this is an ugly way to add from_user and to_user to MessageResource
-	#def dehydrate(self, bundle):
-	#	from_user = Message.objects.get(id=bundle.data['id']).from_user
-	#	to_user = Message.objects.get(id=bundle.data['id']).to_user
-	#	bundle.data['from_user'] = from_user.get_absolute_url()
-	#	bundle.data['to_user'] = to_user.get_absolute_url()
-	#	return bundle
 
 	authentication = Authentication()
 	authorization  = Authorization()
+
+	def override_urls(self):
+		return [
+			url(r"^(?P<resource_name>%s)/(?P<from_user__user__username>[\w\d_.-]+)/(?P<to_user__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
+		]
 
 
 
 class FeedEventResource(ModelResource):
 	article = fields.ToOneField('wallet_wiki.resources.ArticleResource', 'article', null=True, full=False)
 	collection = fields.ToOneField('wallet_wiki.resources.CollectionResource', 'collection', null=True, full=False)
+	inbox = fields.ToOneField('wallet_wiki.resources.InboxResource', 'inbox', null=False, full=True)
 	
 	class Meta:
 		resource_name = 'feedevent'
 		queryset = FeedEvent.objects.all()
 		list_allowed_methods = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		filtering = {
+			'inbox': ALL_WITH_RELATIONS,		
+		}
 
 	authentication = Authentication()
 	authorization = Authorization()
+	
+	def override_urls(self):
+		return [
+			url(r"^(?P<resource_name>%s)/(?P<inbox__user__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
+		]
 
-
-
-# class ArticleEventResource(ModelResource):
-# 	article = fields.ToOneField('wallet_wiki.resources.ArticleResource', 'article', null=False, full=True)
-# 	
-# 	class Meta:
-# 		resource_name = 'articleevent'
-# 		queryset = ArticleEvent.objects.all()
-# 		list_allowed_methods = ['get', 'post']
-# 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
-# 
-# 	authentication = Authentication()
-# 	authorization = Authorization()
-# 
-# 
-# class CollectionEventResource(ModelResource):
-# 	collection = fields.ToOneField('wallet_wiki.resources.CollectionResource', 'collection', null=False, full=True)
-# 	
-# 	class Meta:
-# 		resource_name = 'collectionevent'
-# 		queryset = CollectionEvent.objects.all()
-# 		list_allowed_methods = ['get', 'post']
-# 		detail_allowed_methods = ['get', 'post', 'put', 'delete']
-# 		
-# 
-# 	authentication = Authentication()
-# 	authorization = Authorization()
 
 
 
