@@ -315,7 +315,7 @@
 			"file": "wallet_wiki/models.py",
 			"settings":
 			{
-				"buffer_size": 10018,
+				"buffer_size": 11117,
 				"line_ending": "Unix"
 			}
 		},
@@ -323,7 +323,7 @@
 			"file": "wallet_wiki/resources.py",
 			"settings":
 			{
-				"buffer_size": 10338,
+				"buffer_size": 11078,
 				"line_ending": "Unix"
 			}
 		},
@@ -331,7 +331,7 @@
 			"file": "wallet/urls.py",
 			"settings":
 			{
-				"buffer_size": 1223,
+				"buffer_size": 1300,
 				"line_ending": "Unix"
 			}
 		}
@@ -448,6 +448,7 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/workspace/test_django/test_app/models.py",
 		"/home/arthur/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
 		"/home/arthur/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
 		"/home/arthur/workspace/wallet/wallet.sublime-project",
@@ -574,8 +575,7 @@
 		"/media/data/stduy/undergraduation-project/block_surf/src/com/stromberglabs/jopensurf/BlockImage.class",
 		"/home/arthur/.config/sublime-text-2/Packages/SublimeLinter/SublimeLinter.sublime-settings",
 		"/home/arthur/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap",
-		"/home/arthur/count-change.c",
-		"/home/arthur/Desktop/data/stduy/undergraduation-project/block_surf/build.xml"
+		"/home/arthur/count-change.c"
 	],
 	"find":
 	{
@@ -747,7 +747,7 @@
 					"file": "wallet_wiki/models.py",
 					"settings":
 					{
-						"buffer_size": 10018,
+						"buffer_size": 11117,
 						"regions":
 						{
 						},
@@ -774,15 +774,15 @@
 					"file": "wallet_wiki/resources.py",
 					"settings":
 					{
-						"buffer_size": 10338,
+						"buffer_size": 11078,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1349,
-								1349
+								1619,
+								1619
 							]
 						],
 						"settings":
@@ -791,7 +791,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 108.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -801,7 +801,7 @@
 					"file": "wallet/urls.py",
 					"settings":
 					{
-						"buffer_size": 1223,
+						"buffer_size": 1300,
 						"regions":
 						{
 						},

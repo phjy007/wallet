@@ -7,7 +7,9 @@ from tastypie.authentication import Authentication, BasicAuthentication
 from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie import fields
 from tastypie.resources import ALL_WITH_RELATIONS
+from tastypie.exceptions import ImmediateHttpResponse
 from wallet_wiki.models import *
+from wallet_wiki.authorization import *
 
 
 class UserResource(ModelResource):
@@ -21,22 +23,38 @@ class UserResource(ModelResource):
 		queryset			   = UserProfile.objects.all()
 		key_field			   = 'nickname'
 		list_allowed_methods   = ['get', 'post']	
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
 			'user': ALL_WITH_RELATIONS,
 			'nickname': ('exact', 'startswith', ),
 		}
 		# authentication = BasicAuthentication()
-		# authorization  = DjangoAuthorization()
-		authentication = Authentication()
-		authorization  = Authorization()
-
+		authorization = DjangoAuthorization()
 
 	def override_urls(self):
 	 	return [
 	 		url(r"^(?P<resource_name>%s)/(?P<user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
 	 	]
-		
+
+	def apply_authorization_limits(self, request, object_list):
+		if not request.user.is_superuser:
+			return object_list.filter(user=request.user)
+		else:
+			return object_list
+
+	# def determine_format(self, request):
+	# 	if (hasattr(request, 'format') and request.format in self._meta.serializer.formats):
+	# 		return self._meta.serializer.get_mime_for_format(request.format)
+	# 	return super(UserResource, self).determine_format(request)
+
+	# def wrap_view(self, view):
+	# 	def wrapper(request, *args, **kwargs):
+	# 		request.format = kwargs.pop('format', None)
+	# 		wrapped_view = super(UserResource, self).wrap_view(view)
+	# 		return wrapped_view(request, *args, **kwargs)
+	# 	return wrapper
+	
+
 
 class UserCoreResource(ModelResource):
 
@@ -65,17 +83,28 @@ class InboxResource(ModelResource):
 	class Meta:
 		resource_name = 'inbox'
 		queryset = Inbox.objects.all()
-		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		list_allowed_methods   = ['get']
+		detail_allowed_methods = ['get']
 		filtering = {
 			'user': ALL_WITH_RELATIONS,
 		}
+
+		# authentication = BasicAuthentication()
 	
 	def override_urls(self):
 		return [
 			url(r"^(?P<resource_name>%s)/(?P<user__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
 		]
 
+	def obj_create(self, bundle, request=None, **kwargs):
+		return super(InboxResource, self).obj_create(bundle, request, user=request.user)
+
+	# list only objects for which 'user' field matches 'request.user'
+	def apply_authorization_limits(self, request, object_list):
+		if not request.user.is_superuser:
+			return object_list.filter(user=request.user)
+		else:
+			return object_list
 
 
 class CategoryResource(ModelResource):
@@ -85,7 +114,7 @@ class CategoryResource(ModelResource):
 		resource_name		  = 'category'
 		queryset			   = Category.objects.all()
 		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
 			'category_name': ('exact', 'startswith', ),
 		}
@@ -93,7 +122,7 @@ class CategoryResource(ModelResource):
 	authentication = Authentication()
 	authorization  = Authorization()
 
-	def prepend_urls(self):
+	def override_urls(self):
 		return [
 			url(r"^(?P<resource_name>%s)/(?P<category_name>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
 		]
@@ -101,24 +130,30 @@ class CategoryResource(ModelResource):
 
 
 class KeywordResource(ModelResource):
-	keyword_author = fields.ToOneField('wallet_wiki.resources.UserResource', 'author', null=False, full=False)
+	author = fields.ToOneField('wallet_wiki.resources.UserResource', 'author', null=False, full=False)
 
 	class Meta:
 		resource_name		  = 'keyword'
 		queryset			   = Keyword.objects.all()
 		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
-			'user': ALL_WITH_RELATIONS,
+			'author': ALL_WITH_RELATIONS,
 		}
 
-	authentication = Authentication()
-	authorization  = Authorization()
+	authorization  = DjangoAuthorization()
 	
 	def override_urls(self):
 		return [
 			url(r"^(?P<resource_name>%s)/(?P<author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 		]
+
+	def apply_authorization_limits(self, request, object_list):
+		if not request.user.is_superuser:
+			return object_list.filter(author=request.user)
+		else:
+			return object_list
+		
 
 
 class ArticleMetaResource(ModelResource):
@@ -133,7 +168,7 @@ class ArticleMetaResource(ModelResource):
 		resource_name		  = 'article_meta'
 		queryset			   = ArticleMeta.objects.all()
 		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
 			'id': ('exact', ),
 			'title': ('exact', 'startswith'),
@@ -141,14 +176,19 @@ class ArticleMetaResource(ModelResource):
 			'category': ALL_WITH_RELATIONS,
 		}
 
-	authentication = Authentication()
-	authorization  = Authorization()
+	authorization  = DjangoAuthorization()
 		
 	def override_urls(self):
 		return [
 			# url(r"^(?P<resource_name>%s)/(?P<author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
 			url(r"^(?P<resource_name>%s)/(?P<author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 		]
+
+	def apply_authorization_limits(self, request, object_list):
+		if not request.user.is_superuser:
+			return object_list.filter(author=request.user)
+		else:
+			return object_list
 
 
 
@@ -161,19 +201,27 @@ class ArticleResource(ModelResource):
 		resource_name		  = 'article'
 		queryset			   = Article.objects.all()
 		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
 			'meta': ALL_WITH_RELATIONS,
 			'id': ('exact', ),
 		}
 
-	authentication = Authentication()
-	authorization  = Authorization()
+	authorization  = DjangoAuthorization()
 		
 	def override_urls(self):
 		return [
 			url(r"^(?P<resource_name>%s)/(?P<meta__author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 		]
+
+	# def apply_authorization_limits(self, request, object_list):
+	# 	# if not request.user.is_superuser:
+	# 	# 	author = self.meta.author
+	# 	# 	return object_list.filter(author=request.user)
+	# 	# else:
+	# 	# 	return object_list
+	# 	print self.meta.author
+	# 	return object_list
 
 
 
@@ -186,18 +234,23 @@ class CollectionResource(ModelResource):
 		resource_name		  = 'collection'
 		queryset			   = Collection.objects.all()
 		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
 			'belong_to': ALL_WITH_RELATIONS,
 		}
 
-	authentication = Authentication()
-	authorization  = Authorization()
+	authorization  = DjangoAuthorization()
 		
 	def override_urls(self):
 		return [
 			url(r"^(?P<resource_name>%s)/(?P<belong_to__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 		]
+
+	def apply_authorization_limits(self, request, object_list):
+		if not request.user.is_superuser:
+			return object_list.filter(belong_to=request.user)
+		else:
+			return object_list
 
 
 
@@ -209,7 +262,7 @@ class CommentResource(ModelResource):
 		resource_name		  = 'comment'
 		queryset			   = Comment.objects.all()
 		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'post', 'delete']
 		filtering = {
 			'article': ALL_WITH_RELATIONS,
 		}
@@ -231,7 +284,7 @@ class AttachmentResource(ModelResource):
 		resource_name		  = 'attachment'
 		queryset			   = Attachment.objects.all()
 		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
 			'article': ALL_WITH_RELATIONS,
 		}
@@ -254,7 +307,7 @@ class MessageResource(ModelResource):
 		resource_name = 'message'
 		queryset = Message.objects.all()
 		list_allowed_methods   = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'delete']
 		filtering = {
 			'from_user': ALL_WITH_RELATIONS,
 			'to_user': ALL_WITH_RELATIONS,
@@ -268,6 +321,11 @@ class MessageResource(ModelResource):
 			url(r"^(?P<resource_name>%s)/(?P<from_user__user__username>[\w\d_.-]+)/(?P<to_user__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 		]
 
+	def apply_authorization_limits(self, request, object_list):
+		if not request.user.is_superuser:
+			return object_list.filter(from_user=request.user)
+		else:
+			return object_list
 
 
 class FeedEventResource(ModelResource):
@@ -279,7 +337,7 @@ class FeedEventResource(ModelResource):
 		resource_name = 'feedevent'
 		queryset = FeedEvent.objects.all()
 		list_allowed_methods = ['get', 'post']
-		detail_allowed_methods = ['get', 'post', 'put', 'delete']
+		detail_allowed_methods = ['get', 'delete']
 		filtering = {
 			'inbox': ALL_WITH_RELATIONS,		
 		}
