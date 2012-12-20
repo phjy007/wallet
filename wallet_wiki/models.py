@@ -52,7 +52,7 @@ admin.site.register(UserProfile)
 
 
 # The size of inbox
-INBOX_MAX_ITEM = 50
+INBOX_MAX_ITEM = 1000
 
 # Inbox is the contatiner for FeedMessages
 class Inbox(models.Model):

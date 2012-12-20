@@ -180,7 +180,6 @@ class ArticleMetaResource(ModelResource):
 		
 	def override_urls(self):
 		return [
-			# url(r"^(?P<resource_name>%s)/(?P<author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
 			url(r"^(?P<resource_name>%s)/(?P<author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 		]
 
@@ -193,7 +192,7 @@ class ArticleMetaResource(ModelResource):
 
 
 class ArticleResource(ModelResource):
-	meta = fields.ForeignKey('wallet_wiki.resources.ArticleMetaResource', 'meta', null=False, full=False)
+	meta = fields.ForeignKey('wallet_wiki.resources.ArticleMetaResource', 'meta', null=False, full=True)
 	comments = fields.ToManyField('wallet_wiki.resources.CommentResource', 'comment_set', null=False, full=False)
 	attachments = fields.ToManyField('wallet_wiki.resources.AttachmentResource', 'attachment_set', null=False, full=False)
 
@@ -226,7 +225,7 @@ class ArticleResource(ModelResource):
 
 
 class CollectionResource(ModelResource):
-	article  = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=False)
+	article  = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=True)
 	belong_to = fields.ForeignKey('wallet_wiki.resources.UserResource', 'belong_to', null=False, full=False)
 	keyword   = fields.ToManyField('wallet_wiki.resources.KeywordResource', 'keyword', null=False, full=True)
 

@@ -4,8 +4,17 @@ __init__.py	../wallet_wiki/__init__.py	1
 admin.py	../wallet_wiki/admin.py	1
 authentication.py	../wallet_wiki/authentication.py	1
 authorization.py	../wallet_wiki/authorization.py	1
+bootstrap-responsive.css	../web_client/bootstrap/css/bootstrap-responsive.css	1
+bootstrap-responsive.min.css	../web_client/bootstrap/css/bootstrap-responsive.min.css	1
+bootstrap.css	../web_client/bootstrap/css/bootstrap.css	1
+bootstrap.js	../web_client/bootstrap/js/bootstrap.js	1
+bootstrap.min.css	../web_client/bootstrap/css/bootstrap.min.css	1
+bootstrap.min.js	../web_client/bootstrap/js/bootstrap.min.js	1
+homepage.html	../web_client/html/homepage.html	1
+index.html	../web_client/html/index.html	1
 manage.py	../manage.py	1
 models.py	../wallet_wiki/models.py	1
+page_template.html	../page_template.html	1
 quick_gen_project_autogen.sh	../quick_gen_project_autogen.sh	1
 quick_gen_project_wallet_autogen.sh	../quick_gen_project_wallet_autogen.sh	1
 resources.py	../wallet_wiki/resources.py	1

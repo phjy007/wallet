@@ -5,12 +5,11 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 ADMINS	../wallet/settings.py	/^ADMINS = ($/;"	v
+ALL_WITH_RELATIONS	../wallet_wiki/resources.py	/^from tastypie.resources import ALL_WITH_RELATIONS$/;"	i
 ARTICLE_ACTION_CHOICES	../wallet_wiki/models.py	/^ARTICLE_ACTION_CHOICES = ($/;"	v
 AUTH_PROFILE_MODULE	../wallet/settings.py	/^AUTH_PROFILE_MODULE = 'wallet_wiki.UserProfile'$/;"	v
 Api	../wallet/urls.py	/^from tastypie.api import Api$/;"	i
 Article	../wallet_wiki/models.py	/^class Article(models.Model):$/;"	c	inherits:models.Model
-ArticleEvent	../wallet_wiki/models.py	/^class ArticleEvent(FeedEvent):$/;"	c	inherits:FeedEvent
-ArticleEventResource	../wallet_wiki/resources.py	/^class ArticleEventResource(ModelResource):$/;"	c	inherits:ModelResource
 ArticleMeta	../wallet_wiki/models.py	/^class ArticleMeta(models.Model):$/;"	c	inherits:models.Model
 ArticleMetaResource	../wallet_wiki/resources.py	/^class ArticleMetaResource(ModelResource):$/;"	c	inherits:ModelResource
 ArticleResource	../wallet_wiki/resources.py	/^class ArticleResource(ModelResource):$/;"	c	inherits:ModelResource
@@ -23,18 +22,18 @@ BasicAuthentication	../wallet_wiki/resources.py	/^from tastypie.authentication i
 Category	../wallet_wiki/models.py	/^class Category(models.Model):$/;"	c	inherits:models.Model
 CategoryResource	../wallet_wiki/resources.py	/^class CategoryResource(ModelResource):$/;"	c	inherits:ModelResource
 Collection	../wallet_wiki/models.py	/^class Collection(models.Model):$/;"	c	inherits:models.Model
-CollectionEvent	../wallet_wiki/models.py	/^class CollectionEvent(FeedEvent):$/;"	c	inherits:FeedEvent
 CollectionResource	../wallet_wiki/resources.py	/^class CollectionResource(ModelResource):$/;"	c	inherits:ModelResource
 Comment	../wallet_wiki/models.py	/^class Comment(models.Model):$/;"	c	inherits:models.Model
-CommentEvent	../wallet_wiki/models.py	/^class CommentEvent(FeedEvent):$/;"	c	inherits:FeedEvent
 CommentResource	../wallet_wiki/resources.py	/^class CommentResource(ModelResource):$/;"	c	inherits:ModelResource
 DATABASES	../wallet/settings.py	/^DATABASES = {$/;"	v
 DEBUG	../wallet/settings.py	/^DEBUG = True$/;"	v
 DjangoAuthorization	../wallet_wiki/resources.py	/^from tastypie.authorization import Authorization, DjangoAuthorization$/;"	i
+FEEDEVENT_TYPE_CHOICE	../wallet_wiki/models.py	/^FEEDEVENT_TYPE_CHOICE = ($/;"	v
 FeedEvent	../wallet_wiki/models.py	/^class FeedEvent(models.Model):$/;"	c	inherits:models.Model
-FollowEvent	../wallet_wiki/models.py	/^class FollowEvent(FeedEvent):$/;"	c	inherits:FeedEvent
-INBOX_MAX_ITEM	../wallet_wiki/models.py	/^INBOX_MAX_ITEM = 2 $/;"	v
+FeedEventResource	../wallet_wiki/resources.py	/^class FeedEventResource(ModelResource):$/;"	c	inherits:ModelResource
+INBOX_MAX_ITEM	../wallet_wiki/models.py	/^INBOX_MAX_ITEM = 50$/;"	v
 INSTALLED_APPS	../wallet/settings.py	/^INSTALLED_APPS = ($/;"	v
+ImmediateHttpResponse	../wallet_wiki/resources.py	/^from tastypie.exceptions import ImmediateHttpResponse$/;"	i
 Inbox	../wallet_wiki/models.py	/^class Inbox(models.Model):$/;"	c	inherits:models.Model
 InboxResource	../wallet_wiki/resources.py	/^class InboxResource(ModelResource):$/;"	c	inherits:ModelResource
 Keyword	../wallet_wiki/models.py	/^class Keyword(models.Model):$/;"	c	inherits:models.Model
@@ -47,8 +46,11 @@ MEDIA_URL	../wallet/settings.py	/^MEDIA_URL = ''$/;"	v
 MIDDLEWARE_CLASSES	../wallet/settings.py	/^MIDDLEWARE_CLASSES = ($/;"	v
 Message	../wallet_wiki/models.py	/^class Message(models.Model):$/;"	c	inherits:models.Model
 MessageResource	../wallet_wiki/resources.py	/^class MessageResource(ModelResource):$/;"	c	inherits:ModelResource
+Meta	../wallet_wiki/models.py	/^	class Meta:$/;"	c	class:Article	inherits:
+Meta	../wallet_wiki/models.py	/^	class Meta:$/;"	c	class:ArticleMeta	inherits:
 Meta	../wallet_wiki/models.py	/^	class Meta:$/;"	c	class:Collection	inherits:
 Meta	../wallet_wiki/models.py	/^	class Meta:$/;"	c	class:FeedEvent	inherits:
+Meta	../wallet_wiki/models.py	/^	class Meta:$/;"	c	class:Keyword	inherits:
 Meta	../wallet_wiki/models.py	/^	class Meta:$/;"	c	class:Message	inherits:
 Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:ArticleMetaResource	inherits:
 Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:ArticleResource	inherits:
@@ -56,7 +58,11 @@ Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:AttachmentResource	i
 Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:CategoryResource	inherits:
 Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:CollectionResource	inherits:
 Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:CommentResource	inherits:
+Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:FeedEventResource	inherits:
+Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:InboxResource	inherits:
 Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:KeywordResource	inherits:
+Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:MessageResource	inherits:
+Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:UserCoreResource	inherits:
 Meta	../wallet_wiki/resources.py	/^	class Meta:$/;"	c	class:UserResource	inherits:
 ModelResource	../wallet_wiki/resources.py	/^from tastypie.resources import ModelResource$/;"	i
 ROOT_URLCONF	../wallet/settings.py	/^ROOT_URLCONF = 'wallet.urls'$/;"	v
@@ -81,6 +87,7 @@ User	../wallet_wiki/models.py	/^from django.contrib.auth.models import User$/;"	
 User	../wallet_wiki/resources.py	/^from django.contrib.auth.models import User$/;"	i
 UserAdmin	../wallet_wiki/admin.py	/^class UserAdmin(UserAdmin):$/;"	c	inherits:UserAdmin
 UserAdmin	../wallet_wiki/admin.py	/^from django.contrib.auth.admin import UserAdmin$/;"	i
+UserCoreResource	../wallet_wiki/resources.py	/^class UserCoreResource(ModelResource):$/;"	c	inherits:ModelResource
 UserProfile	../wallet_wiki/admin.py	/^from wallet_wiki.models import UserProfile$/;"	i
 UserProfile	../wallet_wiki/models.py	/^class UserProfile(models.Model):$/;"	c	inherits:models.Model
 UserProfileInline	../wallet_wiki/admin.py	/^class UserProfileInline(admin.StackedInline):$/;"	c	inherits:admin.StackedInline
@@ -88,106 +95,139 @@ UserResource	../wallet_wiki/resources.py	/^class UserResource(ModelResource):$/;
 WSGI_APPLICATION	../wallet/settings.py	/^WSGI_APPLICATION = 'wallet.wsgi.application'$/;"	v
 WalletAuthentication	../wallet_wiki/authentication.py	/^class WalletAuthentication(Authentication):$/;"	c	inherits:Authentication
 WalletAuthorization	../wallet_wiki/authentication.py	/^class WalletAuthorization():$/;"	c	inherits:
+__call__	../wallet_wiki/authorization.py	/^	def __call__(self, obj, request, *args, **kwargs):$/;"	m	class:check_superuser	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:Article	file:	access:private
-__unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:ArticleEvent	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:ArticleMeta	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:Attachment	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:Category	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:Collection	file:	access:private
-__unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:CollectionEvent	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:Comment	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:Inbox	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:Keyword	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:Message	file:	access:private
 __unicode__	../wallet_wiki/models.py	/^	def __unicode__(self):$/;"	m	class:UserProfile	file:	access:private
-action	../wallet_wiki/models.py	/^	action  = models.CharField(max_length=20, default='create', choices=ARTICLE_ACTION_CHOICES)$/;"	v	class:ArticleEvent
+__unicode__	../wallet_wiki/models.py	/^ 	def __unicode__(self):$/;"	f	function:FeedEvent.get_absolute_url	file:	access:private
+action	../wallet_wiki/models.py	/^ 	action  = models.CharField(max_length=20, default='create', choices=ARTICLE_ACTION_CHOICES)$/;"	v	class:FeedEvent
 admin	../wallet/urls.py	/^from django.contrib import admin$/;"	i
 admin	../wallet_wiki/admin.py	/^from django.contrib import admin$/;"	i
 admin	../wallet_wiki/models.py	/^from django.contrib import admin$/;"	i
 application	../wallet/wsgi.py	/^application = get_wsgi_application()$/;"	v
+apply_authorization_limits	../wallet_wiki/resources.py	/^	def apply_authorization_limits(self, request, object_list):$/;"	m	class:ArticleMetaResource	access:public
+apply_authorization_limits	../wallet_wiki/resources.py	/^	def apply_authorization_limits(self, request, object_list):$/;"	m	class:CollectionResource	access:public
+apply_authorization_limits	../wallet_wiki/resources.py	/^	def apply_authorization_limits(self, request, object_list):$/;"	m	class:InboxResource	access:public
+apply_authorization_limits	../wallet_wiki/resources.py	/^	def apply_authorization_limits(self, request, object_list):$/;"	m	class:KeywordResource	access:public
+apply_authorization_limits	../wallet_wiki/resources.py	/^	def apply_authorization_limits(self, request, object_list):$/;"	m	class:MessageResource	access:public
+apply_authorization_limits	../wallet_wiki/resources.py	/^	def apply_authorization_limits(self, request, object_list):$/;"	m	class:UserResource	access:public
 article	../wallet_wiki/models.py	/^	article           = models.ForeignKey('Article')$/;"	v	class:Collection
 article	../wallet_wiki/models.py	/^	article         = models.ForeignKey('Article')$/;"	v	class:Attachment
-article	../wallet_wiki/models.py	/^	article = models.ForeignKey('Article')	$/;"	v	class:ArticleEvent
 article	../wallet_wiki/models.py	/^	article = models.ForeignKey('Article')$/;"	v	class:Comment
+article	../wallet_wiki/models.py	/^ 	article = models.ForeignKey('Article', null=True, blank=True)	$/;"	v	class:FeedEvent
+article	../wallet_wiki/resources.py	/^	article  = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=False)$/;"	v	class:CollectionResource
 article	../wallet_wiki/resources.py	/^	article = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=False)$/;"	v	class:AttachmentResource
 article	../wallet_wiki/resources.py	/^	article = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=False)$/;"	v	class:CommentResource
+article	../wallet_wiki/resources.py	/^	article = fields.ToOneField('wallet_wiki.resources.ArticleResource', 'article', null=True, full=False)$/;"	v	class:FeedEventResource
 article_post_save_callbalck	../wallet_wiki/models.py	/^def article_post_save_callbalck(sender, instance, created, **kwargs):$/;"	f	access:public
 attachment_file	../wallet_wiki/models.py	/^	attachment_file = models.FileField(upload_to=attachment_path)$/;"	v	class:Attachment
 attachment_path	../wallet_wiki/models.py	/^	def attachment_path(instance, filename):$/;"	m	class:Attachment	access:public
 attachment_type	../wallet_wiki/models.py	/^	attachment_type = models.CharField(max_length=100)$/;"	v	class:Attachment
+attachments	../wallet_wiki/resources.py	/^	attachments = fields.ToManyField('wallet_wiki.resources.AttachmentResource', 'attachment_set', null=False, full=False)$/;"	v	class:ArticleResource
 auth	../wallet_wiki/authentication.py	/^from django.contrib import auth$/;"	i
-authentication	../wallet_wiki/resources.py	/^		authentication = BasicAuthentication()$/;"	v	class:UserResource.Meta
-authentication	../wallet_wiki/resources.py	/^	authentication = Authentication()$/;"	v	class:ArticleMetaResource
-authentication	../wallet_wiki/resources.py	/^	authentication = Authentication()$/;"	v	class:ArticleResource
+authentication	../wallet_wiki/resources.py	/^		authentication = Authentication()$/;"	v	class:UserCoreResource.Meta
 authentication	../wallet_wiki/resources.py	/^	authentication = Authentication()$/;"	v	class:AttachmentResource
 authentication	../wallet_wiki/resources.py	/^	authentication = Authentication()$/;"	v	class:CategoryResource
-authentication	../wallet_wiki/resources.py	/^	authentication = Authentication()$/;"	v	class:CollectionResource
 authentication	../wallet_wiki/resources.py	/^	authentication = Authentication()$/;"	v	class:CommentResource
-authentication	../wallet_wiki/resources.py	/^	authentication = Authentication()$/;"	v	class:KeywordResource
+authentication	../wallet_wiki/resources.py	/^	authentication = Authentication()$/;"	v	class:FeedEventResource
+authentication	../wallet_wiki/resources.py	/^	authentication = Authentication()$/;"	v	class:MessageResource
 author	../wallet_wiki/models.py	/^	author         = models.ForeignKey('UserProfile')$/;"	v	class:ArticleMeta
 author	../wallet_wiki/models.py	/^	author       = models.ForeignKey('UserProfile', null=False, blank=False)$/;"	v	class:Keyword
 author	../wallet_wiki/models.py	/^	author  = models.ForeignKey('UserProfile')$/;"	v	class:Comment
-author	../wallet_wiki/resources.py	/^	author         = fields.ForeignKey('wallet_wiki.resources.UserResource', 'author', null=False, full=False)$/;"	v	class:ArticleMetaResource
 author	../wallet_wiki/resources.py	/^	author  = fields.ForeignKey('wallet_wiki.resources.UserResource', 'author', null=False, full=False)	$/;"	v	class:CommentResource
-authorization	../wallet_wiki/resources.py	/^		authorization  = DjangoAuthorization()$/;"	v	class:UserResource.Meta
-authorization	../wallet_wiki/resources.py	/^	authorization  = Authorization()$/;"	v	class:ArticleMetaResource
-authorization	../wallet_wiki/resources.py	/^	authorization  = Authorization()$/;"	v	class:ArticleResource
+author	../wallet_wiki/resources.py	/^	author = fields.ForeignKey('wallet_wiki.resources.UserResource', 'author', null=False, full=False)$/;"	v	class:ArticleMetaResource
+author	../wallet_wiki/resources.py	/^	author = fields.ToOneField('wallet_wiki.resources.UserResource', 'author', null=False, full=False)$/;"	v	class:KeywordResource
+authorization	../wallet_wiki/resources.py	/^		authorization  = Authorization()$/;"	v	class:UserCoreResource.Meta
+authorization	../wallet_wiki/resources.py	/^		authorization = DjangoAuthorization()$/;"	v	class:UserResource.Meta
 authorization	../wallet_wiki/resources.py	/^	authorization  = Authorization()$/;"	v	class:AttachmentResource
 authorization	../wallet_wiki/resources.py	/^	authorization  = Authorization()$/;"	v	class:CategoryResource
-authorization	../wallet_wiki/resources.py	/^	authorization  = Authorization()$/;"	v	class:CollectionResource
 authorization	../wallet_wiki/resources.py	/^	authorization  = Authorization()$/;"	v	class:CommentResource
-authorization	../wallet_wiki/resources.py	/^	authorization  = Authorization()$/;"	v	class:KeywordResource
+authorization	../wallet_wiki/resources.py	/^	authorization  = Authorization()$/;"	v	class:MessageResource
+authorization	../wallet_wiki/resources.py	/^	authorization  = DjangoAuthorization()$/;"	v	class:ArticleMetaResource
+authorization	../wallet_wiki/resources.py	/^	authorization  = DjangoAuthorization()$/;"	v	class:ArticleResource
+authorization	../wallet_wiki/resources.py	/^	authorization  = DjangoAuthorization()$/;"	v	class:CollectionResource
+authorization	../wallet_wiki/resources.py	/^	authorization  = DjangoAuthorization()$/;"	v	class:KeywordResource
+authorization	../wallet_wiki/resources.py	/^	authorization = Authorization()$/;"	v	class:FeedEventResource
 belong_to	../wallet_wiki/models.py	/^	belong_to         = models.ForeignKey('UserProfile')$/;"	v	class:Collection
-belong_to	../wallet_wiki/resources.py	/^	belong_to = fields.ForeignKey('wallet_wiki.resources.UserResource', 'belong_to', null=False, full=True)$/;"	v	class:CollectionResource
+belong_to	../wallet_wiki/resources.py	/^	belong_to = fields.ForeignKey('wallet_wiki.resources.UserResource', 'belong_to', null=False, full=False)$/;"	v	class:CollectionResource
 can_delete	../wallet_wiki/admin.py	/^	can_delete          = False$/;"	v	class:UserProfileInline
+can_get_detail	../wallet_wiki/authorization.py	/^def can_get_detail(request, url_argument):$/;"	f	access:public
 category	../wallet_wiki/models.py	/^	category       = models.ManyToManyField('Category')$/;"	v	class:ArticleMeta
-category	../wallet_wiki/resources.py	/^	category       = fields.ToManyField('wallet_wiki.resources.CategoryResource', 'category', null=True, full=False)$/;"	v	class:ArticleMetaResource
+category	../wallet_wiki/resources.py	/^	category = fields.ToManyField('wallet_wiki.resources.CategoryResource', 'category', null=True, full=False)$/;"	v	class:ArticleMetaResource
 category_name	../wallet_wiki/models.py	/^	category_name = models.CharField(max_length=100, unique=True)$/;"	v	class:Category
+check_superuser	../wallet_wiki/authorization.py	/^class check_superuser(object):$/;"	c	inherits:object
 collect_post_save_callbalck	../wallet_wiki/models.py	/^def collect_post_save_callbalck(sender, instance, created, **kwargs):$/;"	f	access:public
 collect_time	../wallet_wiki/models.py	/^	collect_time      = models.DateTimeField(auto_now=True)$/;"	v	class:Collection
-collection	../wallet_wiki/models.py	/^	collection = models.ForeignKey('Collection')$/;"	v	class:CollectionEvent
+collection	../wallet_wiki/models.py	/^ 	collection = models.ForeignKey('Collection', null=True, blank=True)$/;"	v	class:FeedEvent
+collection	../wallet_wiki/resources.py	/^	collection = fields.ToOneField('wallet_wiki.resources.CollectionResource', 'collection', null=True, full=False)$/;"	v	class:FeedEventResource
+comments	../wallet_wiki/resources.py	/^	comments = fields.ToManyField('wallet_wiki.resources.CommentResource', 'comment_set', null=False, full=False)$/;"	v	class:ArticleResource
 content	../wallet_wiki/models.py	/^	content    = models.TextField(blank=True)$/;"	v	class:Article
 content	../wallet_wiki/models.py	/^	content   = models.TextField()$/;"	v	class:Message
 content	../wallet_wiki/models.py	/^	content = models.TextField(blank=True)$/;"	v	class:Comment
 create_user_profile	../wallet_wiki/models.py	/^	def create_user_profile(sender, instance, created, **kwargs):$/;"	m	class:UserProfile	access:public
-dehydrate	../wallet_wiki/resources.py	/^	def dehydrate(self, bundle):$/;"	m	class:ArticleMetaResource	access:public
-dehydrate	../wallet_wiki/resources.py	/^	def dehydrate(self, bundle):$/;"	m	class:ArticleResource	access:public
-dehydrate	../wallet_wiki/resources.py	/^	def dehydrate(self, bundle):$/;"	m	class:UserResource	access:public
-detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'post', 'put', 'delete']$/;"	v	class:ArticleMetaResource.Meta
-detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'post', 'put', 'delete']$/;"	v	class:ArticleResource.Meta
-detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'post', 'put', 'delete']$/;"	v	class:AttachmentResource.Meta
-detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'post', 'put', 'delete']$/;"	v	class:CategoryResource.Meta
-detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'post', 'put', 'delete']$/;"	v	class:CollectionResource.Meta
-detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'post', 'put', 'delete']$/;"	v	class:CommentResource.Meta
-detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'post', 'put', 'delete']$/;"	v	class:KeywordResource.Meta
-detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'post', 'put', 'delete']$/;"	v	class:UserResource.Meta
-excludes	../wallet_wiki/resources.py	/^		excludes               = ['password', 'date_joined', 'is_active', 'is_staff', 'last_login', 'first_name', 'last_name']$/;"	v	class:UserResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'delete']$/;"	v	class:FeedEventResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'delete']$/;"	v	class:MessageResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'post', 'delete']$/;"	v	class:CommentResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'put', 'delete']$/;"	v	class:ArticleMetaResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'put', 'delete']$/;"	v	class:ArticleResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'put', 'delete']$/;"	v	class:AttachmentResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'put', 'delete']$/;"	v	class:CategoryResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'put', 'delete']$/;"	v	class:CollectionResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'put', 'delete']$/;"	v	class:KeywordResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get', 'put', 'delete']$/;"	v	class:UserResource.Meta
+detail_allowed_methods	../wallet_wiki/resources.py	/^		detail_allowed_methods = ['get']$/;"	v	class:InboxResource.Meta
+event_type	../wallet_wiki/models.py	/^	event_type = models.CharField(max_length=20, default='undef',  choices=FEEDEVENT_TYPE_CHOICE)$/;"	v	class:FeedEvent
+excludes	../wallet_wiki/resources.py	/^		excludes = ['password', 'date_joined', 'is_active', 'is_staff', 'last_login', 'first_name', 'last_name']$/;"	v	class:UserCoreResource.Meta
 execute_from_command_line	../manage.py	/^    from django.core.management import execute_from_command_line$/;"	i
+fans	../wallet_wiki/resources.py	/^	fans = fields.ToManyField('wallet_wiki.resources.UserResource', 'userprofile_set', null=True, full=False)$/;"	v	class:UserResource
+feed_event	../wallet_wiki/resources.py	/^	feed_event = fields.ToManyField('wallet_wiki.resources.FeedEventResource', 'feedevent_set', null=True, full=False)$/;"	v	class:InboxResource
 fields	../wallet_wiki/resources.py	/^from tastypie import fields$/;"	i
+filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:ArticleMetaResource.Meta
+filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:ArticleResource.Meta
+filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:AttachmentResource.Meta
 filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:CategoryResource.Meta
+filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:CollectionResource.Meta
+filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:CommentResource.Meta
+filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:FeedEventResource.Meta
+filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:InboxResource.Meta
 filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:KeywordResource.Meta
+filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:MessageResource.Meta
+filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:UserCoreResource.Meta
 filtering	../wallet_wiki/resources.py	/^		filtering = {$/;"	v	class:UserResource.Meta
 following	../wallet_wiki/models.py	/^	following = models.ManyToManyField('self', blank=True, null=True, symmetrical=False)$/;"	v	class:UserProfile
-following	../wallet_wiki/resources.py	/^	following = fields.ToManyField('self', 'following', null=True)$/;"	v	class:UserResource
+following	../wallet_wiki/resources.py	/^	following = fields.ToManyField('self', 'following', null=True, full=False)$/;"	v	class:UserResource
 from_user	../wallet_wiki/models.py	/^	from_user = models.OneToOneField('UserProfile', related_name='from_user')$/;"	v	class:Message
+from_user	../wallet_wiki/resources.py	/^	from_user = fields.ToOneField('wallet_wiki.resources.UserResource', 'from_user', null=False, full=False)$/;"	v	class:MessageResource
 get_absolute_url	../wallet_wiki/models.py	/^	def get_absolute_url(self):$/;"	m	class:Article	access:public
 get_absolute_url	../wallet_wiki/models.py	/^	def get_absolute_url(self):$/;"	m	class:ArticleMeta	access:public
 get_absolute_url	../wallet_wiki/models.py	/^	def get_absolute_url(self):$/;"	m	class:Attachment	access:public
 get_absolute_url	../wallet_wiki/models.py	/^	def get_absolute_url(self):$/;"	m	class:Comment	access:public
+get_absolute_url	../wallet_wiki/models.py	/^	def get_absolute_url(self):$/;"	m	class:FeedEvent	access:public
 get_absolute_url	../wallet_wiki/models.py	/^	def get_absolute_url(self):$/;"	m	class:UserProfile	access:public
 get_wsgi_application	../wallet/wsgi.py	/^from django.core.wsgi import get_wsgi_application$/;"	i
 has_read	../wallet_wiki/models.py	/^	has_read  = models.BooleanField(default=False)$/;"	v	class:Message
 inbox	../wallet_wiki/models.py	/^	inbox = models.ForeignKey('Inbox')$/;"	v	class:FeedEvent
+inbox	../wallet_wiki/resources.py	/^	inbox = fields.ToOneField('wallet_wiki.resources.InboxResource', 'inbox', null=False, full=False)$/;"	v	class:UserResource
+inbox	../wallet_wiki/resources.py	/^	inbox = fields.ToOneField('wallet_wiki.resources.InboxResource', 'inbox', null=False, full=True)$/;"	v	class:FeedEventResource
 include	../wallet/urls.py	/^from django.conf.urls import patterns, include, url$/;"	i
+include	../wallet_wiki/resources.py	/^from django.conf.urls import patterns, include, url$/;"	i
 inlines	../wallet_wiki/admin.py	/^    inlines = (UserProfileInline, )$/;"	v	class:UserAdmin
 is_authentication	../wallet_wiki/authentication.py	/^	def is_authentication(self, request, **kwargs):$/;"	m	class:WalletAuthentication	access:public
 is_draft	../wallet_wiki/models.py	/^	is_draft   = models.BooleanField(default=False)$/;"	v	class:Article
 is_private	../wallet_wiki/models.py	/^	is_private        = models.BooleanField(default=False)$/;"	v	class:Collection
+is_system_msg	../wallet_wiki/models.py	/^	is_system_msg = models.BooleanField(default=False)$/;"	v	class:Message
+key_field	../wallet_wiki/resources.py	/^		key_field			   = 'nickname'$/;"	v	class:UserResource.Meta
 keyword	../wallet_wiki/models.py	/^	keyword           = models.ManyToManyField('Keyword', null=True, blank=True)$/;"	v	class:Collection
 keyword	../wallet_wiki/models.py	/^	keyword        = models.ManyToManyField('Keyword', blank=True, null=True)$/;"	v	class:ArticleMeta
-keyword	../wallet_wiki/resources.py	/^	keyword        = fields.ToManyField('wallet_wiki.resources.KeywordResource', 'keyword', null=True, full=False)$/;"	v	class:ArticleMetaResource
+keyword	../wallet_wiki/resources.py	/^	keyword	= fields.ToManyField('wallet_wiki.resources.KeywordResource', 'keyword', null=True, full=False)$/;"	v	class:ArticleMetaResource
 keyword	../wallet_wiki/resources.py	/^	keyword   = fields.ToManyField('wallet_wiki.resources.KeywordResource', 'keyword', null=False, full=True)$/;"	v	class:CollectionResource
-keyword_author	../wallet_wiki/resources.py	/^	keyword_author = fields.ToOneField('wallet_wiki.resources.UserResource', 'author', null=False, full=True)$/;"	v	class:KeywordResource
 keyword_name	../wallet_wiki/models.py	/^	keyword_name = models.CharField(max_length=20)$/;"	v	class:Keyword
 list_allowed_methods	../wallet_wiki/resources.py	/^		list_allowed_methods   = ['get', 'post']	$/;"	v	class:UserResource.Meta
 list_allowed_methods	../wallet_wiki/resources.py	/^		list_allowed_methods   = ['get', 'post']$/;"	v	class:ArticleMetaResource.Meta
@@ -197,43 +237,68 @@ list_allowed_methods	../wallet_wiki/resources.py	/^		list_allowed_methods   = ['
 list_allowed_methods	../wallet_wiki/resources.py	/^		list_allowed_methods   = ['get', 'post']$/;"	v	class:CollectionResource.Meta
 list_allowed_methods	../wallet_wiki/resources.py	/^		list_allowed_methods   = ['get', 'post']$/;"	v	class:CommentResource.Meta
 list_allowed_methods	../wallet_wiki/resources.py	/^		list_allowed_methods   = ['get', 'post']$/;"	v	class:KeywordResource.Meta
+list_allowed_methods	../wallet_wiki/resources.py	/^		list_allowed_methods   = ['get', 'post']$/;"	v	class:MessageResource.Meta
+list_allowed_methods	../wallet_wiki/resources.py	/^		list_allowed_methods   = ['get']$/;"	v	class:InboxResource.Meta
+list_allowed_methods	../wallet_wiki/resources.py	/^		list_allowed_methods = ['get', 'post']$/;"	v	class:FeedEventResource.Meta
 login_view	../wallet_wiki/authentication.py	/^def login_view(request):$/;"	f	access:public
 meta	../wallet_wiki/models.py	/^	meta       = models.ForeignKey('ArticleMeta')$/;"	v	class:Article
-meta	../wallet_wiki/resources.py	/^	meta      = fields.ForeignKey('wallet_wiki.resources.ArticleMetaResource', 'article_meta', null=False, full=True)$/;"	v	class:CollectionResource
 meta	../wallet_wiki/resources.py	/^	meta = fields.ForeignKey('wallet_wiki.resources.ArticleMetaResource', 'meta', null=False, full=False)$/;"	v	class:ArticleResource
 model	../wallet_wiki/admin.py	/^	model               = UserProfile$/;"	v	class:UserProfileInline
 model_to_dict	../wallet_wiki/resources.py	/^from django.forms.models import model_to_dict$/;"	i
 models	../wallet_wiki/models.py	/^from django.db import models$/;"	i
 models	../wallet_wiki/resources.py	/^from django.db import models$/;"	i
-nickname	../wallet_wiki/models.py	/^	nickname  = models.CharField(max_length=50)$/;"	v	class:UserProfile
+nickname	../wallet_wiki/models.py	/^	nickname  = models.CharField(max_length=50, unique=True)$/;"	v	class:UserProfile
+obj_create	../wallet_wiki/resources.py	/^	def obj_create(self, bundle, request=None, **kwargs):$/;"	m	class:InboxResource	access:public
 ordering	../wallet_wiki/models.py	/^		ordering = ['-time']$/;"	v	class:FeedEvent.Meta
 ordering	../wallet_wiki/models.py	/^		ordering = ['belong_to', '-collect_time']$/;"	v	class:Collection.Meta
 ordering	../wallet_wiki/models.py	/^		ordering = ['from_user', '-time']$/;"	v	class:Message.Meta
 os	../manage.py	/^import os$/;"	i
 os	../wallet/wsgi.py	/^import os$/;"	i
 os	../wallet_wiki/models.py	/^import os$/;"	i
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:ArticleMetaResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:ArticleResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:AttachmentResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:CategoryResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:CollectionResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:CommentResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:FeedEventResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:InboxResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:KeywordResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:MessageResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:UserCoreResource	access:public
+override_urls	../wallet_wiki/resources.py	/^	def override_urls(self):$/;"	m	class:UserResource	access:public
 parent	../wallet_wiki/models.py	/^	parent        = models.ForeignKey('self', null=True, blank=True)$/;"	v	class:Category
 parent_category	../wallet_wiki/resources.py	/^	parent_category = fields.ForeignKey('self', 'parent', null=True, full=True)$/;"	v	class:CategoryResource
 patterns	../wallet/urls.py	/^from django.conf.urls import patterns, include, url$/;"	i
+patterns	../wallet_wiki/resources.py	/^from django.conf.urls import patterns, include, url$/;"	i
 portrait	../wallet_wiki/models.py	/^	portrait  = models.ImageField(upload_to=portrait_path, blank=True, null=True)$/;"	v	class:UserProfile
 portrait_path	../wallet_wiki/models.py	/^	def portrait_path(instance, filename):$/;"	m	class:UserProfile	access:public
 post_save	../wallet_wiki/models.py	/^from django.db.models.signals import post_save$/;"	i
-queryset	../wallet_wiki/resources.py	/^		queryset               = Article.objects.all()$/;"	v	class:ArticleResource.Meta
-queryset	../wallet_wiki/resources.py	/^		queryset               = ArticleMeta.objects.all()$/;"	v	class:ArticleMetaResource.Meta
-queryset	../wallet_wiki/resources.py	/^		queryset               = Attachment.objects.all()$/;"	v	class:AttachmentResource.Meta
-queryset	../wallet_wiki/resources.py	/^		queryset               = Category.objects.all()$/;"	v	class:CategoryResource.Meta
-queryset	../wallet_wiki/resources.py	/^		queryset               = Collection.objects.all()$/;"	v	class:CollectionResource.Meta
-queryset	../wallet_wiki/resources.py	/^		queryset               = Comment.objects.all()$/;"	v	class:CommentResource.Meta
-queryset	../wallet_wiki/resources.py	/^		queryset               = Keyword.objects.all()$/;"	v	class:KeywordResource.Meta
-queryset	../wallet_wiki/resources.py	/^		queryset               = UserProfile.objects.all()$/;"	v	class:UserResource.Meta
-resource_name	../wallet_wiki/resources.py	/^		resource_name          = 'article'$/;"	v	class:ArticleResource.Meta
-resource_name	../wallet_wiki/resources.py	/^		resource_name          = 'article_meta'$/;"	v	class:ArticleMetaResource.Meta
-resource_name	../wallet_wiki/resources.py	/^		resource_name          = 'attachment'$/;"	v	class:AttachmentResource.Meta
-resource_name	../wallet_wiki/resources.py	/^		resource_name          = 'category'$/;"	v	class:CategoryResource.Meta
-resource_name	../wallet_wiki/resources.py	/^		resource_name          = 'collection'$/;"	v	class:CollectionResource.Meta
-resource_name	../wallet_wiki/resources.py	/^		resource_name          = 'comment'$/;"	v	class:CommentResource.Meta
-resource_name	../wallet_wiki/resources.py	/^		resource_name          = 'keyword'$/;"	v	class:KeywordResource.Meta
-resource_name	../wallet_wiki/resources.py	/^		resource_name          = 'user'$/;"	v	class:UserResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset			   = Article.objects.all()$/;"	v	class:ArticleResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset			   = ArticleMeta.objects.all()$/;"	v	class:ArticleMetaResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset			   = Attachment.objects.all()$/;"	v	class:AttachmentResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset			   = Category.objects.all()$/;"	v	class:CategoryResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset			   = Collection.objects.all()$/;"	v	class:CollectionResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset			   = Comment.objects.all()$/;"	v	class:CommentResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset			   = Keyword.objects.all()$/;"	v	class:KeywordResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset			   = UserProfile.objects.all()$/;"	v	class:UserResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset = FeedEvent.objects.all()$/;"	v	class:FeedEventResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset = Inbox.objects.all()$/;"	v	class:InboxResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset = Message.objects.all()$/;"	v	class:MessageResource.Meta
+queryset	../wallet_wiki/resources.py	/^		queryset = User.objects.all()$/;"	v	class:UserCoreResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name		  = 'article'$/;"	v	class:ArticleResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name		  = 'article_meta'$/;"	v	class:ArticleMetaResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name		  = 'attachment'$/;"	v	class:AttachmentResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name		  = 'category'$/;"	v	class:CategoryResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name		  = 'collection'$/;"	v	class:CollectionResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name		  = 'comment'$/;"	v	class:CommentResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name		  = 'keyword'$/;"	v	class:KeywordResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name		  = 'user'$/;"	v	class:UserResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name = 'feedevent'$/;"	v	class:FeedEventResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name = 'inbox'$/;"	v	class:InboxResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name = 'message'$/;"	v	class:MessageResource.Meta
+resource_name	../wallet_wiki/resources.py	/^		resource_name = 'user_core'$/;"	v	class:UserCoreResource.Meta
+sited_article	../wallet_wiki/resources.py	/^	sited_article = fields.ToManyField('wallet_wiki.resources.ArticleMetaResource', 'articlemeta_set', null=False, full=False)$/;"	v	class:ArticleMetaResource
 siting_article	../wallet_wiki/models.py	/^	siting_article = models.ManyToManyField('ArticleMeta', blank=True, null=True)$/;"	v	class:ArticleMeta
 siting_article	../wallet_wiki/resources.py	/^	siting_article = fields.ToManyField('wallet_wiki.resources.ArticleMetaResource', 'siting_article', null=False, full=False)$/;"	v	class:ArticleMetaResource
 sys	../manage.py	/^import sys$/;"	i
@@ -244,12 +309,21 @@ time	../wallet_wiki/models.py	/^	time    = models.DateTimeField(auto_now=True)$/
 time	../wallet_wiki/models.py	/^	time  = models.DateTimeField(auto_now=True)$/;"	v	class:FeedEvent
 title	../wallet_wiki/models.py	/^	title          = models.CharField(max_length=200)$/;"	v	class:ArticleMeta
 to_user	../wallet_wiki/models.py	/^	to_user   = models.OneToOneField('UserProfile', related_name='to_user')$/;"	v	class:Message
+to_user	../wallet_wiki/resources.py	/^	to_user = fields.ToOneField('wallet_wiki.resources.UserResource', 'to_user', null=False, full=False)$/;"	v	class:MessageResource
+unique_together	../wallet_wiki/models.py	/^		unique_together = (('article', 'belong_to'),)$/;"	v	class:Collection.Meta
+unique_together	../wallet_wiki/models.py	/^		unique_together = (('keyword_name', 'author'),)$/;"	v	class:Keyword.Meta
+unique_together	../wallet_wiki/models.py	/^		unique_together = (('meta', 'version'),)$/;"	v	class:Article.Meta
+unique_together	../wallet_wiki/models.py	/^		unique_together = (('title', 'author'),)$/;"	v	class:ArticleMeta.Meta
 url	../wallet/urls.py	/^from django.conf.urls import patterns, include, url$/;"	i
+url	../wallet_wiki/resources.py	/^from django.conf.urls import patterns, include, url$/;"	i
 urlpatterns	../wallet/urls.py	/^urlpatterns = patterns('',$/;"	v
 user	../wallet_wiki/models.py	/^	user      = models.OneToOneField(User)$/;"	v	class:UserProfile
 user	../wallet_wiki/models.py	/^	user = models.OneToOneField('UserProfile')$/;"	v	class:Inbox
+user	../wallet_wiki/resources.py	/^	user = fields.ToOneField('wallet_wiki.resources.UserCoreResource', 'user', null=False, full=True)$/;"	v	class:UserResource
+user	../wallet_wiki/resources.py	/^	user = fields.ToOneField('wallet_wiki.resources.UserResource', 'user', null=False, full=False)$/;"	v	class:InboxResource
 user_post_save_callbalck	../wallet_wiki/models.py	/^def user_post_save_callbalck(sender, instance, created, **kwargs):$/;"	f	access:public
 v1_api	../wallet/urls.py	/^v1_api = Api(api_name='v1')$/;"	v
 v1_api	../wallet_wiki/models.py	/^		from wallet.urls import v1_api$/;"	i
 verbose_name_plural	../wallet_wiki/admin.py	/^	verbose_name_plural = 'profile'$/;"	v	class:UserProfileInline
 version	../wallet_wiki/models.py	/^	version    = models.PositiveIntegerField(default=0)$/;"	v	class:Article
+versions	../wallet_wiki/resources.py	/^	versions = fields.ToManyField('wallet_wiki.resources.ArticleResource', 'article_set', null=False, full=False)$/;"	v	class:ArticleMetaResource

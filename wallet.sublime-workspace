@@ -323,7 +323,23 @@
 			"file": "wallet_wiki/resources.py",
 			"settings":
 			{
-				"buffer_size": 11078,
+				"buffer_size": 12968,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "web_client/html/homepage.html",
+			"settings":
+			{
+				"buffer_size": 4124,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "web_client/bootstrap/css/bootstrap.css",
+			"settings":
+			{
+				"buffer_size": 124223,
 				"line_ending": "Unix"
 			}
 		},
@@ -331,7 +347,7 @@
 			"file": "wallet/urls.py",
 			"settings":
 			{
-				"buffer_size": 1300,
+				"buffer_size": 1399,
 				"line_ending": "Unix"
 			}
 		}
@@ -593,6 +609,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"navbar",
+			"					    \n",
+			"div",
 			"	\"http_proxy\": \"http://10.131.255.80:3128\",\n	\"https_proxy\": \"http://10.131.255.80:3128\",",
 			"# feedevent_list.pop(0)\n					# print '!! ', c, ' ', feed_item_count ",
 			"OneToOneField",
@@ -717,10 +736,7 @@
 			"SkipFunctionBodies",
 			"location",
 			"null",
-			"import",
-			"model",
-			"passw",
-			"state->getSVal"
+			"import"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -739,7 +755,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -774,15 +790,15 @@
 					"file": "wallet_wiki/resources.py",
 					"settings":
 					{
-						"buffer_size": 11078,
+						"buffer_size": 12968,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1619,
-								1619
+								0,
+								0
 							]
 						],
 						"settings":
@@ -798,10 +814,65 @@
 				},
 				{
 					"buffer": 2,
+					"file": "web_client/html/homepage.html",
+					"settings":
+					{
+						"buffer_size": 4124,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2491,
+								2491
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 702.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "web_client/bootstrap/css/bootstrap.css",
+					"settings":
+					{
+						"buffer_size": 124223,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4338,
+								4338
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4837.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
 					"file": "wallet/urls.py",
 					"settings":
 					{
-						"buffer_size": 1300,
+						"buffer_size": 1399,
 						"regions":
 						{
 						},
@@ -814,7 +885,9 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

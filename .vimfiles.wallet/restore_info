@@ -2,7 +2,7 @@ badd wallet_wiki/resources.py
 badd wallet_wiki/models.py
 badd wallet/urls.py
 badd wallet/settings.py
-badd wallet_wiki/authentication.py
-badd wallet_wiki/authorization.py
-edit wallet_wiki/authentication.py
-call cursor(22,1)
+badd web_client/html/homepage.html
+badd wallet_wiki/views.py
+edit web_client/html/homepage.html
+call cursor(34,10)

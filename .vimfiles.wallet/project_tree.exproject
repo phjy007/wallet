@@ -1,4 +1,4 @@
-file filter = c,C,c++,cc,cp,cpp,cxx,h,H,h++,hh,hp,hpp,hxx,inl,ipp,cs,js,as,java,hlsl,vsh,psh,fx,fxh,cg,shd,glsl,py,pyw,pyx,pxd,lua,wlua,vim,uc,m,wiki,ini,cfg,mak,mk,Makefile,makefile,sh,SH,bsh,bash,ksh,zsh,bat,log,err,exe,qrc,pro,pri,i,swg,
+file filter = c,C,c++,cc,cp,cpp,cxx,h,H,h++,hh,hp,hpp,hxx,inl,ipp,cs,js,as,java,hlsl,vsh,psh,fx,fxh,cg,shd,glsl,py,pyw,pyx,pxd,lua,wlua,vim,uc,m,wiki,ini,cfg,mak,mk,Makefile,makefile,sh,SH,bsh,bash,ksh,zsh,bat,log,err,exe,qrc,pro,pri,i,swg,html,css
 dir filter = 
 
 -[F]wallet {
@@ -17,6 +17,10 @@ dir filter =
  | |-[p]resources.py
  | |-[p]tests.py
  | |-[p]views.py }
+ |
+ |-[F]web_client {
+ | |-[F]html {
+ |   |-[h]index.html } }
  |
  |-[p]manage.py
  |-[s]quick_gen_project_autogen.sh

@@ -3,6 +3,7 @@
 ../.vimfiles.wallet/quick_gen_project_post_custom.sh
 ../manage.py
 ../quick_gen_project_autogen.sh
+../web_client/html/index.html
 ../wallet/wsgi.py
 ../wallet/urls.py
 ../wallet/settings.py

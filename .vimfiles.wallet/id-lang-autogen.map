@@ -73,3 +73,5 @@ quick_gen_project_*.* IGNORE
 *.pri    text
 *.i    text
 *.swg    text
+*.html    text
+*.css    text
