@@ -176,11 +176,11 @@ class ArticleMetaResource(ModelResource):
 	# 		url(r"^(?P<resource_name>%s)/(?P<author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 	# 	]
 
-	def apply_authorization_limits(self, request, object_list):
-		if not request.user.is_superuser:
-			return object_list.filter(author=request.user)
-		else:
-			return object_list
+	# def apply_authorization_limits(self, request, object_list):
+	# 	if not request.user.is_superuser:
+	# 		return object_list.filter(author=request.user)
+	# 	else:
+	# 		return object_list
  
 	# TODO: fix the BUG of article_meta cearting authorization
 	def obj_create(self, bundle, request=None, **kwargs):
@@ -211,11 +211,11 @@ class ArticleResource(ModelResource):
 	# 		url(r"^(?P<resource_name>%s)/(?P<meta__author__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 	# 	]
 
-	def apply_authorization_limits(self, request, object_list):
-		if not request.user.is_superuser:
-			return object_list.filter(author=request.user)
-		else:
-			return object_list
+	# def apply_authorization_limits(self, request, object_list):
+	# 	if not request.user.is_superuser:
+	# 		return object_list.filter(author=request.user)
+	# 	else:
+	# 		return object_list
 
 
 
@@ -240,16 +240,16 @@ class CollectionResource(ModelResource):
 	# 		url(r"^(?P<resource_name>%s)/(?P<belong_to__user__username>[\w\d_.-]+)/$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
 	# 	]
 
-	def apply_authorization_limits(self, request, object_list):
-		if not request.user.is_superuser:
-			return object_list.filter(belong_to=request.user)
-		else:
-			return object_list
+	# def apply_authorization_limits(self, request, object_list):
+	# 	if not request.user.is_superuser:
+	# 		return object_list.filter(belong_to=request.user)
+	# 	else:
+	# 		return object_list
 
 
 
 class CommentResource(ModelResource):
-	author  = fields.ForeignKey('wallet_wiki.resources.UserResource', 'author', null=False, full=False)	
+	author  = fields.ForeignKey('wallet_wiki.resources.UserResource', 'author', null=False, full=True)	
 	article = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=False)
 
 	class Meta:

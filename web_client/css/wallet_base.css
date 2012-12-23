@@ -23,7 +23,7 @@
 	margin-top: 450px;
 }
 
-#profile_portrait, .feedevent_portrait, .profile_following_img, .profile_followers_img  {
+#profile_portrait, .feedevent_portrait, .profile_following_img, .profile_followers_img {
 	height: 50px;
 	width: 50px;
 }
@@ -42,7 +42,7 @@
 }
 
 
-.profile_following_item span,  .profile_followers_item span{
+.profile_following_item span,  .profile_followers_item span {
 	margin-left: 20px;
 	font-size: 18px;
 }
@@ -53,4 +53,28 @@
 
 .new_article_title {
 	width: 200px;
+}
+
+#article_author_portrait {
+	height: 80px;
+	width: 80px;
+}
+
+#article_title {
+	font-size: 25px;
+	margin-top: 30px;
+}
+
+#article_content {
+	font-size: 16px;
+	margin-top: 20px;
+}
+
+.comment_content {
+	font-size: 16px;
+}
+
+.comment_portrait {
+	height: 50px;
+	width:50px;
 }

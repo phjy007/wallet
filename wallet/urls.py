@@ -46,8 +46,11 @@ urlpatterns = patterns('',
     url(r'^logout/', logout_view),
 
 	url(r'^index/', show_index),
-	url(r'^homepage/(\w+)/$', show_homepage),
-    url(r'^piggybank/', show_someone_piggybank),
-    url(r'^homepage/(\w+)/new_article/$', show_new_article),
-    url(r'^piggybank/(\w+)/article/(\w+)/$', show_view_article),
+
+	url(r'^homepage/(\w+)/$', show_homepage), # when someone login successfully, this url takes him to his own homepage
+    url(r'^homepage/(\w+)/new_article/$', write_new_article), # the page that user can write a new article
+    url(r'^homepage/(\w+)/my_article/(\d+)/$', show_my_article), # the page that user can write a new article
+
+    url(r'^/piggybank/(\w+)/article/(\d+)/$', view_article), # view other's article
+    url(r'^/piggybank/(\w+)/$', visit_someone_piggybank),  # view other's page
 )

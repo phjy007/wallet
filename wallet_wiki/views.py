@@ -8,19 +8,32 @@ from django.shortcuts import render,render_to_response
 def show_index(request):
 	return render_to_response("html/index.html")
 
+
 @login_required
 def show_homepage(request, username):
-	return render_to_response("html/homepage.html")
+    if username != request.user.username:
+        return HttpResponseRedirect("/index/")
+    return render_to_response("html/homepage.html")
 
-def show_someone_piggybank(request):
-	return render_to_response("html/someone_piggybank.html")
 
 @login_required
-def show_new_article(request, username):
+def write_new_article(request, username):
+    if username != request.user.username:
+        return HttpResponseRedirect("/index/")
     return render_to_response("html/new_article.html")
 
+
 @login_required
-def show_view_article(request, username):
+def show_my_article(request, username, article_id):
+    pass
+
+
+def visit_someone_piggybank(request):
+    return render_to_response("html/someone_piggybank.html")
+
+
+@login_required
+def view_article(request, username, author, article_id):
     return render_to_response("html/view_article.html")
 
 
