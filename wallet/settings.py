@@ -45,7 +45,8 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/arthur/workspace/wallet/wallet_wiki/static'
+MEDIA_ROOT = '/home/arthur/workspace/wallet/web_client/'
+# MEDIA_ROOT = '/home/arthur/workspace/wallet/wallet_wiki/static'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.

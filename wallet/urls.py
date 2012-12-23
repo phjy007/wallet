@@ -48,4 +48,6 @@ urlpatterns = patterns('',
 	url(r'^index/', show_index),
 	url(r'^homepage/(\w+)/$', show_homepage),
     url(r'^piggybank/', show_someone_piggybank),
+    url(r'^homepage/(\w+)/new_article/$', show_new_article),
+    url(r'^piggybank/(\w+)/article/(\w+)/$', show_view_article),
 )

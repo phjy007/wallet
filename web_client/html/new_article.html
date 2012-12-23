@@ -65,60 +65,16 @@
 			</div>
 		</div>	
 
-		<div class="container">
-			<div class="row">
-				<div class="span3">
-					<div class="well sidebar-nav">
-			            <ul class="nav nav-list">
-			            	<li>
-			            		<div class="row-fluid">
-								  	<div class="span3">
-								  		<img class="img-rounded" id="profile_portrait" src="#">
-								  	</div>
-								  	<div class="span8">
-								  		<strong><div id="username"></div></strong>
-								  		<div class="wallet_assist_word">View my profile page</div>
-								  	</div>
-								</div>
-			            	</li>
-			            	<li class="divider"></li>
-			            	<li>
-			            		<div class="row-fluid">
-								  	<div class="span4">
-								  		<div><a href="#followingModal" data-toggle="modal" id="profile_following"><b>0</b></a></div>
-								  		<div class="wallet_assist_word">FOLLOWING</div>
-								  	</div>
-								  	<div class="span2"></div>
-								  	<div class="span6">
-								  		<div><a href="#followersModal" data-toggle="modal" id="profile_followers"><b>0</b></a></div>
-								  		<div class="wallet_assist_word">FOLLOWERS</div>
-								  	</div>
-								</div>
-			            	</li>
-			            	<li class="divider"></li>
-							<li class="nav-header" id="my_coins">My coins</li>
-							<li class="divider"></li>
-							<li class="nav-header" id="my_collection">My Collections</li>
-							<li class="divider"></li>
-							<li>
-								<a href="./new_article" >
-									<span class="label label-important"><i class="icon-plus icon-white"></i> Release a new coin</span>
-								</a>
-							</li>
-			            </ul>
-          			</div>
+		<div class="container" id="zabi">
+			<div class="control-group">
+				<div class="controls">
+			    	<input type="text" id="new_article_title"  class="field span6"name="new_article_title" placeholder="Title..." />
 				</div>
-
-				<div class="span9">
-	          		<div>
-						<h4>Feed Events</h4>
-						<hr class="bs-docs-separator">
-						<span id="feedevent_start"></span>
-	          			
-						<center><a href="#"><span class="label get_more"> <i class=" icon-eject icon-white"></i> Get More </span></a></center>
-	          		</div>
-          		</div>
 			</div>
+			<div>
+				<textarea id="new_article_content" rows="30" class="field span12" placeholder="Content..."></textarea>
+			</div>
+			<a class="btn btn-primary" id="new_article_save"><i class="icon-thumbs-up icon-white"></i> Save</a>
 				
 		</div>
 
@@ -180,34 +136,6 @@
 				<a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
 			</div>
 		</div>
-
-		<!-- Following Modals -->
-		<div class="modal hide fade" id="followingModal">
-			<div class="modal-header">
-				<a class="close" data-dismiss="modal">×</a>
-				<h4>You're following</h4>
-			</div>
-			<div class="modal-body">
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
-			</div>
-		</div>
-
-		<!-- Followers Modals -->
-		<div class="modal hide fade" id="followersModal">
-			<div class="modal-header">
-				<a class="close" data-dismiss="modal">×</a>
-				<h4>Your followers</h4>
-			</div>
-			<div class="modal-body">
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
-			</div>
-		</div>
-
-
 
 
 

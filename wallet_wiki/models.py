@@ -20,7 +20,7 @@ ARTICLE_ACTION_CHOICES = (
 # Create your models here.
 class UserProfile(models.Model):
 	def portrait_path(instance, filename):
-		return os.path.join('user', str(instance.user.username), 'portrait', filename)
+		return os.path.join('img/user', str(instance.user.username), 'portrait', filename)
 
 	user      = models.OneToOneField(User)
 	nickname  = models.CharField(max_length=50, unique=True)
@@ -45,6 +45,7 @@ def user_post_save_callbalck(sender, instance, created, **kwargs):
 			inbox, created = Inbox.objects.get_or_create(user=instance)
 
 post_save.connect(user_post_save_callbalck, dispatch_uid="my_unique_identifier_1")
+
 
 
 admin.site.register(UserProfile)
@@ -109,6 +110,18 @@ class ArticleMeta(models.Model):
 		unique_together = (('title', 'author'),)
 
 
+# def article_meta_post_save_callbalck(sender, instance, created, **kwargs):
+# 	if issubclass(sender, ArticleMeta):
+# 		if created:
+# 			# to create a version 0 article for this article meta
+# 			article = Article.objects.create(meta=instance, version=0)
+# 			article.save
+
+# post_save.connect(article_meta_post_save_callbalck)
+
+
+
+
 
 class Article(models.Model):
 	meta       = models.ForeignKey('ArticleMeta')
@@ -130,6 +143,7 @@ class Article(models.Model):
 def article_post_save_callbalck(sender, instance, created, **kwargs):
 	if issubclass(sender, Article):
 		if created:
+			# to add feedevent related to this new article to author's fans
 			author = instance.meta.author
 			fans   = author.userprofile_set.all()
 			for c in fans:
@@ -148,6 +162,7 @@ def article_post_save_callbalck(sender, instance, created, **kwargs):
 					action = ARTICLE_ACTION_CHOICES[1][1] # update a new version of certain article
 				article_event = FeedEvent.objects.create(inbox=inbox, action=action, article=instance, event_type='article')
 				article_event.save
+
 
 post_save.connect(article_post_save_callbalck, dispatch_uid="my_unique_identifier_2")
 
@@ -236,8 +251,10 @@ class Attachment(models.Model):
 
 # User-to-User messages
 class Message(models.Model):
-	from_user = models.OneToOneField('UserProfile', related_name='from_user')
-	to_user   = models.OneToOneField('UserProfile', related_name='to_user')
+	# from_user = models.OneToOneField('UserProfile', related_name='from_user')
+	# to_user   = models.OneToOneField('UserProfile', related_name='to_user')
+	from_user = models.ForeignKey('UserProfile', related_name='from_user')
+	to_user   = models.ForeignKey('UserProfile', related_name='to_user')
 	content   = models.TextField()
 	has_read  = models.BooleanField(default=False)
 	time      = models.DateTimeField(auto_now=True)

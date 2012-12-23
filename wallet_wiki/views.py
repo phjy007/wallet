@@ -15,6 +15,13 @@ def show_homepage(request, username):
 def show_someone_piggybank(request):
 	return render_to_response("html/someone_piggybank.html")
 
+@login_required
+def show_new_article(request, username):
+    return render_to_response("html/new_article.html")
+
+@login_required
+def show_view_article(request, username):
+    return render_to_response("html/view_article.html")
 
 
 

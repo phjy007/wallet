@@ -3,7 +3,7 @@
 }
 
 .comment_and_collect {
-	margin-top: 15px;
+	margin-top: 5px;
 }
 
 .get_more {
@@ -21,4 +21,36 @@
 
 .index_footer {
 	margin-top: 450px;
+}
+
+#profile_portrait, .feedevent_portrait, .profile_following_img, .profile_followers_img  {
+	height: 50px;
+	width: 50px;
+}
+
+#profile_window_portrait {
+	height: 80px;
+	width: 80px;
+}
+
+#profile_window_upload_new_portrait {
+	margin-top: 10px;
+}
+
+#settingsModalBody {
+	margin-left: 80px;
+}
+
+
+.profile_following_item span,  .profile_followers_item span{
+	margin-left: 20px;
+	font-size: 18px;
+}
+
+.profile_following_item span span, .profile_followers_item span span {
+	font-size: 12px;
+}
+
+.new_article_title {
+	width: 200px;
 }

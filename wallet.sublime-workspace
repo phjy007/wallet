@@ -4,6 +4,50 @@
 		"selected_items":
 		[
 			[
+				"us",
+				"username"
+			],
+			[
+				"pro",
+				"protrait"
+			],
+			[
+				"par",
+				"parent_category"
+			],
+			[
+				"Cate",
+				"CategoryResource"
+			],
+			[
+				"new",
+				"new_pwd_again"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"por",
+				"portrait"
+			],
+			[
+				"fi",
+				"filter"
+			],
+			[
+				"lo",
+				"logout"
+			],
+			[
+				"log",
+				"login_view"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
 				"fee",
 				"feedevent_list"
 			],
@@ -192,10 +236,6 @@
 				"DateTimeField  (class)"
 			],
 			[
-				"por",
-				"portrait_path"
-			],
-			[
 				"ca",
 				"category_name"
 			],
@@ -312,10 +352,10 @@
 	"buffers":
 	[
 		{
-			"file": "wallet_wiki/models.py",
+			"file": "wallet/settings.py",
 			"settings":
 			{
-				"buffer_size": 11117,
+				"buffer_size": 5508,
 				"line_ending": "Unix"
 			}
 		},
@@ -323,7 +363,15 @@
 			"file": "wallet_wiki/resources.py",
 			"settings":
 			{
-				"buffer_size": 12968,
+				"buffer_size": 12721,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wallet_wiki/models.py",
+			"settings":
+			{
+				"buffer_size": 11123,
 				"line_ending": "Unix"
 			}
 		},
@@ -331,15 +379,31 @@
 			"file": "web_client/html/homepage.html",
 			"settings":
 			{
-				"buffer_size": 4124,
+				"buffer_size": 7223,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "web_client/bootstrap/css/bootstrap.css",
+			"file": "web_client/js/homepage.js",
 			"settings":
 			{
-				"buffer_size": 124223,
+				"buffer_size": 7875,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "web_client/html/index.html",
+			"settings":
+			{
+				"buffer_size": 2033,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "web_client/css/wallet_base.css",
+			"settings":
+			{
+				"buffer_size": 486,
 				"line_ending": "Unix"
 			}
 		},
@@ -347,7 +411,15 @@
 			"file": "wallet/urls.py",
 			"settings":
 			{
-				"buffer_size": 1399,
+				"buffer_size": 1524,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wallet_wiki/views.py",
+			"settings":
+			{
+				"buffer_size": 1116,
 				"line_ending": "Unix"
 			}
 		}
@@ -464,6 +536,9 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/workspace/wallet/web_client/html/someone_piggybank.html",
+		"/home/arthur/workspace/wallet/wallet_wiki/resources.py",
+		"/home/arthur/workspace/wallet/web_client/bootstrap/css/bootstrap.css",
 		"/home/arthur/workspace/test_django/test_app/models.py",
 		"/home/arthur/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
 		"/home/arthur/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
@@ -495,7 +570,6 @@
 		"/home/arthur/bin/llvm/llvm/tools/clang/tools/driver/cc1_main.cpp",
 		"/home/arthur/bin/llvm/llvm/tools/clang/tools/driver/driver.cpp",
 		"/home/arthur/bin/llvm/llvm/tools/clang/lib/Driver/Driver.cpp",
-		"/home/arthur/workspace/wallet/wallet_wiki/resources.py",
 		"/home/arthur/bin/llvm/llvm/tools/clang/include/clang/StaticAnalyzer/Core/PathSensitive/SymbolManager.h",
 		"/home/arthur/bin/llvm/llvm/tools/clang/include/clang/StaticAnalyzer/Core/PathSensitive/CoreEngine.h",
 		"/home/arthur/bin/llvm/llvm/tools/clang/include/clang/AST/ASTConsumer.h",
@@ -589,9 +663,7 @@
 		"/home/arthur/.config/sublime-text-2/Packages/Default/Default (Linux).sublime-keymap",
 		"/home/arthur/pintu.c",
 		"/media/data/stduy/undergraduation-project/block_surf/src/com/stromberglabs/jopensurf/BlockImage.class",
-		"/home/arthur/.config/sublime-text-2/Packages/SublimeLinter/SublimeLinter.sublime-settings",
-		"/home/arthur/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap",
-		"/home/arthur/count-change.c"
+		"/home/arthur/.config/sublime-text-2/Packages/SublimeLinter/SublimeLinter.sublime-settings"
 	],
 	"find":
 	{
@@ -609,6 +681,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"data-backdrop",
+			"	<span class=\"add-on\"></span>",
 			"navbar",
 			"					    \n",
 			"div",
@@ -734,9 +808,7 @@
 			"ASTConsumer",
 			"Consumer",
 			"SkipFunctionBodies",
-			"location",
-			"null",
-			"import"
+			"location"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -755,32 +827,33 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "wallet_wiki/models.py",
+					"file": "wallet/settings.py",
 					"settings":
 					{
-						"buffer_size": 11117,
+						"buffer_size": 5508,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1683,
+								1683
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 108.0,
+						"translation.y": 648.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -790,15 +863,15 @@
 					"file": "wallet_wiki/resources.py",
 					"settings":
 					{
-						"buffer_size": 12968,
+						"buffer_size": 12721,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								598,
+								598
 							]
 						],
 						"settings":
@@ -807,25 +880,52 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 108.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "web_client/html/homepage.html",
+					"file": "wallet_wiki/models.py",
 					"settings":
 					{
-						"buffer_size": 4124,
+						"buffer_size": 11123,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2491,
-								2491
+								28,
+								28
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "web_client/html/homepage.html",
+					"settings":
+					{
+						"buffer_size": 7223,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5535,
+								5535
 							]
 						],
 						"settings":
@@ -834,53 +934,104 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 702.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "web_client/bootstrap/css/bootstrap.css",
-					"settings":
-					{
-						"buffer_size": 124223,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4338,
-								4338
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 4837.0,
+						"translation.y": 2095.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "wallet/urls.py",
+					"file": "web_client/js/homepage.js",
 					"settings":
 					{
-						"buffer_size": 1399,
+						"buffer_size": 7875,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								6755,
+								6755
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2364.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "web_client/html/index.html",
+					"settings":
+					{
+						"buffer_size": 2033,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1288,
+								1288
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "web_client/css/wallet_base.css",
+					"settings":
+					{
+						"buffer_size": 486,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								247,
+								247
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "wallet/urls.py",
+					"settings":
+					{
+						"buffer_size": 1524,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1453,
+								1453
 							]
 						],
 						"settings":
@@ -888,6 +1039,32 @@
 							"syntax": "Packages/Python/Python.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "wallet_wiki/views.py",
+					"settings":
+					{
+						"buffer_size": 1116,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								412,
+								412
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
