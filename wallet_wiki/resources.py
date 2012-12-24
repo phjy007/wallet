@@ -13,15 +13,15 @@ from wallet_wiki.authorization import *
 
 
 class UserResource(ModelResource):
-	user = fields.ToOneField('wallet_wiki.resources.UserCoreResource', 'user', null=False, full=True)
+	user      = fields.ToOneField('wallet_wiki.resources.UserCoreResource', 'user', null=False, full=True)
 	following = fields.ToManyField('self', 'following', null=True, full=False)
-	inbox = fields.ToOneField('wallet_wiki.resources.InboxResource', 'inbox', null=False, full=False)
-	fans = fields.ToManyField('wallet_wiki.resources.UserResource', 'userprofile_set', null=True, full=False)
+	inbox     = fields.ToOneField('wallet_wiki.resources.InboxResource', 'inbox', null=False, full=False)
+	fans      = fields.ToManyField('wallet_wiki.resources.UserResource', 'userprofile_set', null=True, full=False)
 
 	class Meta:
-		resource_name		  = 'user'
-		queryset			   = UserProfile.objects.all()
-		key_field			   = 'nickname'
+		resource_name          = 'user'
+		queryset               = UserProfile.objects.all()
+		key_field              = 'nickname'
 		list_allowed_methods   = ['get', 'post']	
 		detail_allowed_methods = ['get', 'put', 'patch', 'delete']
 		filtering = {
@@ -48,8 +48,8 @@ class UserCoreResource(ModelResource):
 
 	class Meta:
 		resource_name = 'user_core'
-		queryset = User.objects.all()
-		excludes = ['password', 'date_joined', 'is_active', 'is_staff', 'last_login', 'first_name', 'last_name']
+		queryset      = User.objects.all()
+		excludes      = ['password', 'date_joined', 'is_active', 'is_staff', 'last_login', 'first_name', 'last_name']
 		filtering = {
 			'username': ('exact', ),		
 		}
@@ -70,12 +70,12 @@ class UserCoreResource(ModelResource):
 
 
 class InboxResource(ModelResource):
-	user = fields.ToOneField('wallet_wiki.resources.UserResource', 'user', null=False, full=False)
+	user       = fields.ToOneField('wallet_wiki.resources.UserResource', 'user', null=False, full=False)
 	feed_event = fields.ToManyField('wallet_wiki.resources.FeedEventResource', 'feedevent_set', null=True, full=False)
 
 	class Meta:
-		resource_name = 'inbox'
-		queryset = Inbox.objects.all()
+		resource_name          = 'inbox'
+		queryset               = Inbox.objects.all()
 		list_allowed_methods   = ['get']
 		detail_allowed_methods = ['get']
 		filtering = {
@@ -104,8 +104,8 @@ class CategoryResource(ModelResource):
 	parent_category = fields.ForeignKey('self', 'parent', null=True, full=True)
 
 	class Meta:
-		resource_name		  = 'category'
-		queryset			   = Category.objects.all()
+		resource_name          = 'category'
+		queryset               = Category.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'put', 'patch', 'delete']
 		filtering = {
@@ -126,8 +126,8 @@ class KeywordResource(ModelResource):
 	author = fields.ToOneField('wallet_wiki.resources.UserResource', 'author', null=False, full=False)
 
 	class Meta:
-		resource_name		  = 'keyword'
-		queryset			   = Keyword.objects.all()
+		resource_name          = 'keyword'
+		queryset               = Keyword.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
@@ -150,16 +150,16 @@ class KeywordResource(ModelResource):
 
 
 class ArticleMetaResource(ModelResource):
-	category = fields.ToManyField('wallet_wiki.resources.CategoryResource', 'category', null=True, full=False)
-	keyword	= fields.ToManyField('wallet_wiki.resources.KeywordResource', 'keyword', null=True, full=False)
+	category       = fields.ToManyField('wallet_wiki.resources.CategoryResource', 'category', null=True, full=False)
+	keyword        = fields.ToManyField('wallet_wiki.resources.KeywordResource', 'keyword', null=True, full=False)
 	siting_article = fields.ToManyField('wallet_wiki.resources.ArticleMetaResource', 'siting_article', null=False, full=False)
-	sited_article = fields.ToManyField('wallet_wiki.resources.ArticleMetaResource', 'articlemeta_set', null=False, full=False)
-	author = fields.ForeignKey('wallet_wiki.resources.UserResource', 'author', null=False, full=True)
-	versions = fields.ToManyField('wallet_wiki.resources.ArticleResource', 'article_set', null=False, full=False)
+	sited_article  = fields.ToManyField('wallet_wiki.resources.ArticleMetaResource', 'articlemeta_set', null=False, full=False)
+	author         = fields.ForeignKey('wallet_wiki.resources.UserResource', 'author', null=False, full=True)
+	versions       = fields.ToManyField('wallet_wiki.resources.ArticleResource', 'article_set', null=False, full=False)
 
 	class Meta:
-		resource_name		  = 'article_meta'
-		queryset			   = ArticleMeta.objects.all()
+		resource_name          = 'article_meta'
+		queryset               = ArticleMeta.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'put', 'patch', 'delete']
 		filtering = {
@@ -190,13 +190,13 @@ class ArticleMetaResource(ModelResource):
 
 
 class ArticleResource(ModelResource):
-	meta = fields.ForeignKey('wallet_wiki.resources.ArticleMetaResource', 'meta', null=False, full=True)
-	comments = fields.ToManyField('wallet_wiki.resources.CommentResource', 'comment_set', null=False, full=False)
+	meta        = fields.ForeignKey('wallet_wiki.resources.ArticleMetaResource', 'meta', null=False, full=True)
+	comments    = fields.ToManyField('wallet_wiki.resources.CommentResource', 'comment_set', null=False, full=False)
 	attachments = fields.ToManyField('wallet_wiki.resources.AttachmentResource', 'attachment_set', null=False, full=False)
 
 	class Meta:
-		resource_name		  = 'article'
-		queryset			   = Article.objects.all()
+		resource_name          = 'article'
+		queryset               = Article.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
@@ -204,7 +204,7 @@ class ArticleResource(ModelResource):
 			'id': ('exact', ),
 		}
 
-		authorization  = DjangoAuthorization()
+		authorization  = Authorization()
 		
 	# def override_urls(self):
 	# 	return [
@@ -220,13 +220,13 @@ class ArticleResource(ModelResource):
 
 
 class CollectionResource(ModelResource):
-	article  = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=True)
+	article   = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=True)
 	belong_to = fields.ForeignKey('wallet_wiki.resources.UserResource', 'belong_to', null=False, full=True)
 	keyword   = fields.ToManyField('wallet_wiki.resources.KeywordResource', 'keyword', null=False, full=True)
 
 	class Meta:
-		resource_name		  = 'collection'
-		queryset			   = Collection.objects.all()
+		resource_name          = 'collection'
+		queryset               = Collection.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
@@ -253,8 +253,8 @@ class CommentResource(ModelResource):
 	article = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=False)
 
 	class Meta:
-		resource_name		  = 'comment'
-		queryset			   = Comment.objects.all()
+		resource_name          = 'comment'
+		queryset               = Comment.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'post', 'delete']
 		filtering = {
@@ -275,8 +275,8 @@ class AttachmentResource(ModelResource):
 	article = fields.ForeignKey('wallet_wiki.resources.ArticleResource', 'article', null=False, full=False)
 
 	class Meta:
-		resource_name		  = 'attachment'
-		queryset			   = Attachment.objects.all()
+		resource_name          = 'attachment'
+		queryset               = Attachment.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'put', 'delete']
 		filtering = {
@@ -295,11 +295,11 @@ class AttachmentResource(ModelResource):
 
 class MessageResource(ModelResource):
 	from_user = fields.ToOneField('wallet_wiki.resources.UserResource', 'from_user', null=False, full=False)
-	to_user = fields.ToOneField('wallet_wiki.resources.UserResource', 'to_user', null=False, full=False)
+	to_user   = fields.ToOneField('wallet_wiki.resources.UserResource', 'to_user', null=False, full=False)
 
 	class Meta:
-		resource_name = 'message'
-		queryset = Message.objects.all()
+		resource_name          = 'message'
+		queryset               = Message.objects.all()
 		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'delete']
 		filtering = {
@@ -323,14 +323,14 @@ class MessageResource(ModelResource):
 
 
 class FeedEventResource(ModelResource):
-	article = fields.ToOneField('wallet_wiki.resources.ArticleResource', 'article', null=True, full=True)
+	article    = fields.ToOneField('wallet_wiki.resources.ArticleResource', 'article', null=True, full=True)
 	collection = fields.ToOneField('wallet_wiki.resources.CollectionResource', 'collection', null=True, full=True)
-	inbox = fields.ToOneField('wallet_wiki.resources.InboxResource', 'inbox', null=False, full=False)
+	inbox      = fields.ToOneField('wallet_wiki.resources.InboxResource', 'inbox', null=False, full=False)
 	
 	class Meta:
-		resource_name = 'feedevent'
-		queryset = FeedEvent.objects.all()
-		list_allowed_methods = ['get', 'post']
+		resource_name          = 'feedevent'
+		queryset               = FeedEvent.objects.all()
+		list_allowed_methods   = ['get', 'post']
 		detail_allowed_methods = ['get', 'delete']
 		filtering = {
 			'inbox': ALL_WITH_RELATIONS,		

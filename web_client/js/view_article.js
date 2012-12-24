@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var commentor = window.location.href.split('/')[4];
+	var commentor = $("#nav_logo").attr("href").split('/')[2];
 	var commentor_id;
 
 	var article_id = window.location.href.split('/')[6];
@@ -46,6 +46,7 @@ $(document).ready(function() {
 					if(ii == "author") {
 						comment_item_author_name = item.user.username;
 						comment_item_author_portrait = item.portrait;
+						// comment_item_author_id = item.id;
 					}
 					if(ii == "content") {
 						comment_item_content = item;
@@ -57,7 +58,7 @@ $(document).ready(function() {
 			"<hr>" + 
 			"<div class=\"row-fluid\">" +
 				"<div class=\"span1\"><img class=\"img-rounded comment_portrait\" src=\"/static/" + comment_item_author_portrait + "/\"></div>" +
-				"<div class=\"span11 commentor_name\"><a>" + comment_item_author_name + "</a></div>" + 
+				"<div class=\"span11 commentor_name\"><a href=\"/piggybank/" + comment_item_author_name + "/\">" + comment_item_author_name + "</a></div>" + 
 				"<div class=\"span11 comment_content\">" + comment_item_content + "</div>" + 
 			"</div>" 
 		);
@@ -97,7 +98,7 @@ $(document).ready(function() {
 				
 			}
 		});
-		window.location.replace(window.location.href);
+		location.reload();
 	});
 
 });

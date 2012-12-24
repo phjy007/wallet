@@ -45,12 +45,15 @@ urlpatterns = patterns('',
     url(r'^login/', login_view),
     url(r'^logout/', logout_view),
 
-	url(r'^index/', show_index),
+    url(r'^index/', show_index),
 
 	url(r'^homepage/(\w+)/$', show_homepage), # when someone login successfully, this url takes him to his own homepage
     url(r'^homepage/(\w+)/new_article/$', write_new_article), # the page that user can write a new article
-    url(r'^homepage/(\w+)/my_article/(\d+)/$', show_my_article), # the page that user can write a new article
+    url(r'^homepage/(\w+)/my_article/(\d+)/$', show_my_article), 
+    url(r'^homepage/(\w+)/my_collection/(\d+)/$', show_my_collection), 
+    url(r'^homepage/(\w+)/message/$', my_message), 
 
-    url(r'^/piggybank/(\w+)/article/(\d+)/$', view_article), # view other's article
-    url(r'^/piggybank/(\w+)/$', visit_someone_piggybank),  # view other's page
+    url(r'^piggybank/(\w+)/collection/(\d+)/$', view_collection), # view other's collection
+    url(r'^piggybank/(\w+)/article/(\d+)/$', view_article), # view other's article
+    url(r'^piggybank/(\w+)/$', visit_someone_piggybank),  # view other's page
 )

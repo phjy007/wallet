@@ -13,14 +13,14 @@ def show_index(request):
 def show_homepage(request, username):
     if username != request.user.username:
         return HttpResponseRedirect("/index/")
-    return render_to_response("html/homepage.html")
+    return render_to_response("html/homepage.html", locals())
 
 
 @login_required
 def write_new_article(request, username):
     if username != request.user.username:
         return HttpResponseRedirect("/index/")
-    return render_to_response("html/new_article.html")
+    return render_to_response("html/new_article.html", locals())
 
 
 @login_required
@@ -28,13 +28,32 @@ def show_my_article(request, username, article_id):
     pass
 
 
-def visit_someone_piggybank(request):
-    return render_to_response("html/someone_piggybank.html")
+@login_required
+def show_my_collection(request, username, collection_id):
+    pass
 
 
 @login_required
-def view_article(request, username, author, article_id):
-    return render_to_response("html/view_article.html")
+def my_message(request):
+    pass
+
+
+@login_required
+def visit_someone_piggybank(request, whose_home):
+    username = request.user.username
+    return render_to_response("html/someone_piggybank.html", locals())
+
+
+@login_required
+def view_article(request, author, article_id):
+    username = request.user.username
+    return render_to_response("html/view_article.html", locals())
+
+
+@login_required
+def view_collection(request, author, collection_id):
+    username = request.user.username
+    return render_to_response("html/view_article.html", locals())
 
 
 

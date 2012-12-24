@@ -27,12 +27,12 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" id="nav_logo" href="#">Piggybank</a>
+					<a class="brand" id="nav_logo" href="/homepage/{{ username }}/">Piggybank</a>
 					<div class="nav-collapse">
 						<ul class="nav">
-						    <li class="active"><a href="#" id="nav_homepage"><i class="icon-home icon-white"></i> Homepage</a></li>
-						    <li><a href="#" id="nav_my_piggybank"><i class="icon-share-alt icon-white"></i> My Piggybank</a></li>
-						    <li><a href="#" id="nav_message"><i class="icon-envelope icon-white"></i> Message</a></li>
+						    <li class="active"><a href="/homepage/{{ username }}/" id="nav_homepage"><i class="icon-home icon-white"></i> Homepage</a></li>
+						    <li><a href="/piggybank/{{ username }}/" id="nav_my_piggybank"><i class="icon-share-alt icon-white"></i> My Piggybank</a></li>
+						    <li><a href="/homepage/message/{{ username }}/" id="nav_message"><i class="icon-envelope icon-white"></i> Message</a></li>
 					    </ul>
 					    <form class="navbar-search" action="/search/" method="GET">
   								<input type="text" class="search-query" placeholder="Search...">
@@ -48,7 +48,7 @@
 										<a href="#profileModal" id="dropdown_profile" data-toggle="modal"><i class="icon-list-alt"></i> Profile</a>
 									</li>
 									<li>
-										<a href="#" id="dropdown_message"><i class="icon-envelope"></i> Message</a>
+										<a href="/homepage/message/{{ username }}/" id="dropdown_message"><i class="icon-envelope"></i> Message</a>
 									</li>
 									<li class="divider"></li>
 									<li>

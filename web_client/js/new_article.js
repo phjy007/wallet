@@ -1,7 +1,6 @@
 $(document).ready(function() {
-// new_artilce.html
 	$("#new_article_save").click(function() {
-		var username = window.location.href.split('/')[4];
+		var username = $("#nav_logo").attr("href").split('/')[2];
 		var user_id, user_uri;
 		var new_article_title = $("#new_article_title").val();
 		var new_article_content = $("#new_article_content").val();
@@ -55,6 +54,7 @@ $(document).ready(function() {
 					}
 				});	
 				// alert(new_article_meta_uri);
+				// Create the first version for the new Article Meta
 				var new_article_data = JSON.stringify({
 					"attachments": [],
 					"comments": [],

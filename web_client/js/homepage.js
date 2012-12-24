@@ -5,7 +5,6 @@ $(document).ready(function() {
 	// Get user infomation and render the user's homepage
 	$.ajax({
 		type: "GET",
-		// url: "/api/v1/user/" + username + "/",
 		url: "/api/v1/user/\?format=json\&user__username=" + username,
 		success: function(data) {
 			$.each(data, function(ii, item) {
@@ -15,20 +14,12 @@ $(document).ready(function() {
 					$("#profile_portrait").attr("src", "/static/" + item[0].portrait);
 				}
 			});
-			$("#nav_logo").attr("href", "/homepage/" + username);
-			$("#nav_homepage").attr("href", "/homepage/" + username);
-			$("#nav_my_piggybank").attr("href", "/piggybank/" + username);
-			$("#nav_message").attr("href", "/homepage/" + username + "/message/");
-			$("#dropdown_message").attr("href", "/homepage/" + username + "/message/");
-			// $("#profile_following").attr("href", "/homepage/" + username + "/following/");
-			// $("#profile_followers").attr("href", "/homepage/" + username + "/followers/");
 		}
 	});
 
 	// Get user articles(meta)
 	$.ajax({
 		type: "GET",
-		// url: "/api/v1/article_meta/" + username + "/",
 		url: "/api/v1/article_meta/\?format=json\&author__user__username=" + username,
 		success: function(data) {
 			$.each(data, function(i, item) {
@@ -37,7 +28,7 @@ $(document).ready(function() {
         			for(var i = 0; i < item.length; i++) {
         				if(item[i].versions.length > 0) {
         					var newest_version = item[i].versions[item[i].versions.length - 1].split('/')[4];
-        					$("#my_coins").after("<li><a article_uri=\"" + item[i].versions[item[i].versions.length - 1] + "\" class=\"profile_article\" href=\"/piggybank/" + username + "/article/" + newest_version  + "/?my_name=" + username + "\">" + item[i].title + "</a></li>");
+        					$("#my_coins").after("<li><a article_uri=\"" + item[i].versions[item[i].versions.length - 1] + "\" class=\"profile_article\" href=\"/piggybank/" + username + "/article/" + newest_version  + "/\">" + item[i].title + "</a></li>");
         				}
         			}
         		}
@@ -54,7 +45,7 @@ $(document).ready(function() {
         		if(i == "objects") {
         			var collection_li_array = new Array();
         			for(var i = 0; i < item.length; i++) {
-        				$("#my_collection").after("<li><a href=\"/piggybank/" + username + "/collection/" + item[i].id  + "/?my_name=" + username + "\">" + item[i].article.meta.title + "</a></li>");
+        				$("#my_collection").after("<li><a href=\"/piggybank/" + username + "/collection/" + item[i].article.id  + "/\">" + item[i].article.meta.title + "</a></li>");
         			}
         		}
 			});
@@ -124,7 +115,7 @@ $(document).ready(function() {
 											"<a href=\"/piggybank/" + collector + "\"><span>" + collector + " </span></a>" +
 											"<span>collects </span>" +
 											"<a href=\"/piggybank/" + author + "\"><span>" + author + "'s </span></a>" +
-											"<a href=\"/piggybank/" + collector + "/collection" + article_id  + "/?my_name=" + username + "\"><b>" + title + "</b></a>" +
+											"<a href=\"/piggybank/" + collector + "/collection/" + article_id + "/\"><b>" + title + "</b></a>" +
 											"<div class=\"wallet_assist_word\">This article will tell you something about Linux Driver Programming...</div>" +
 											"<div class=\"pull-right comment_and_collect\">" +
 												"<span class=\"feed_event_time\"><i class=\"icon-time\"></i> " + time + "</span>" +
@@ -250,7 +241,7 @@ $(document).ready(function() {
 									$("#followingModal_start").before(
 											"<div class=\"profile_following_item\">" +
 											"<img class=\"img-rounded profile_following_img\" src=\"/static/" + portrait + "\">"+
-											"<span><a href=\"/piggybank/"+ name + "/\">" + name + "</a><span>  " + email + "</span></span>" + 
+											"<span><a href=\"/piggybank/"+ name + "/\">" + name + "</a><span> " + email + "</span></span>" + 
 											"<hr>" +
 											"</div>"
 									);
