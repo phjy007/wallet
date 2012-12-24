@@ -53,7 +53,7 @@ def view_article(request, author, article_id):
 @login_required
 def view_collection(request, author, collection_id):
     username = request.user.username
-    return render_to_response("html/view_article.html", locals())
+    return render_to_response("html/view_collection.html", locals())
 
 
 
