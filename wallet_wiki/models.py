@@ -185,8 +185,6 @@ class Collection(models.Model):
 
 	class Meta:
 		ordering = ['belong_to', '-collect_time']
-	
-	class Meta:
 		unique_together = (('article', 'belong_to'),)
 
 def collect_post_save_callbalck(sender, instance, created, **kwargs):
