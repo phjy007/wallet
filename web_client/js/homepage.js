@@ -3,8 +3,10 @@ $(document).ready(function() {
 	$("#username").html(username);
 	document.title = "Piggybank - " + username
 	// Get user infomation and render the user's homepage
+	var user_id;
 	$.ajax({
 		type: "GET",
+		async: false,
 		url: "/api/v1/user/\?format=json\&user__username=" + username,
 		success: function(data) {
 			$.each(data, function(ii, item) {
@@ -12,6 +14,7 @@ $(document).ready(function() {
 					$("#profile_followers").html(item[0].fans.length);
 					$("#profile_following").html(item[0].following.length);
 					$("#profile_portrait").attr("src", "/static/" + item[0].portrait);
+					user_id = item[0].user.id;
 				}
 			});
 		}
@@ -25,10 +28,20 @@ $(document).ready(function() {
 			$.each(data, function(i, item) {
         		if(i == "objects") {
         			var article_li_array = new Array();
+        			var showed_item_count = 0;
         			for(var i = 0; i < item.length; i++) {
         				if(item[i].versions.length > 0) {
         					var newest_version = item[i].versions[item[i].versions.length - 1].split('/')[4];
-        					$("#my_coins").after("<li><a article_uri=\"" + item[i].versions[item[i].versions.length - 1] + "\" class=\"profile_article\" href=\"/piggybank/" + username + "/article/" + newest_version  + "/\">" + item[i].title + "</a></li>");
+        					$("#my_coins").after(
+        						"<li><a article_uri=\"" + item[i].versions[item[i].versions.length - 1] + "\" class=\"profile_article\" href=\"/piggybank/" + username + "/article/" + newest_version  + "/\">" + item[i].title + "</a></li>"
+        					);
+        					showed_item_count++;
+        				}
+        				if(showed_item_count >= 6) {
+        					$("#homepage_divider_1").before (
+        						"<li><a class=\"profile_article\" href=\"/piggybank/" + username + "/\">\>\> MORE...</a></li>"
+        					);
+        					break;
         				}
         			}
         		}
@@ -44,8 +57,18 @@ $(document).ready(function() {
 			$.each(data, function(i, item) {
         		if(i == "objects") {
         			var collection_li_array = new Array();
+        			// var showed_item_count = 0;
         			for(var i = 0; i < item.length; i++) {
-        				$("#my_collection").after("<li><a href=\"/piggybank/" + username + "/collection/" + item[i].article.id  + "/\">" + item[i].article.meta.title + "</a></li>");
+        				$("#my_collection").after(
+        					"<li><a href=\"/piggybank/" + username + "/collection/" + item[i].article.id  + "/\">" + item[i].article.meta.title + "</a></li>"
+        				);
+        				// showed_item_count++;
+        				if(i >= 6) {
+	    					$("#homepage_divider_2").before (
+	    						"<li><a class=\"profile_article\" href=\"/piggybank/" + username + "/#someone_piggybank_collections\">\>\> MORE...</a></li>"
+	    					);
+	    					break;
+	    				}
         			}
         		}
 			});
@@ -68,6 +91,9 @@ $(document).ready(function() {
 							var action = item[i].action;
 							var time = item[i].time;
 							var content_preview = item[i].article.content;
+							if(content_preview.length > 400) {
+								content_preview = content_preview.slice(0, 399) + "......";
+							} 
 							var protrait = item[i].article.meta.author.portrait;
 							$("#feedevent_start").before(
 								"<div>" +
@@ -85,11 +111,6 @@ $(document).ready(function() {
 											"<div class=\"pull-right comment_and_collect\">" +
 												"<span class=\"feed_event_time\"><i class=\"icon-time\"></i> " + time + "</span>" +
 											"</div>" +
-											// "<div class=\"pull-right comment_and_collect\">" +
-											// 	"<a href=\"#\"><span class=\"badge label-info\"><i class=\"icon-pencil icon-white\"></i>Comment</span></a>" +
-											// 	"&nbsp &nbsp " +
-											// 	"<a href=\"#\"><span class=\"badge badge-important\"><i class=\"icon-heart icon-white\"></i>Collect</span></a>" +
-											// "</div>" +
 										"</div>" +
 									"</div>" +
 								"</div>" +						
@@ -120,11 +141,6 @@ $(document).ready(function() {
 											"<div class=\"pull-right comment_and_collect\">" +
 												"<span class=\"feed_event_time\"><i class=\"icon-time\"></i> " + time + "</span>" +
 											"</div>" +
-											// "<div class=\"pull-right\">" +
-											// 	"<a href=\"#\"><span class=\"badge label-info\"><i class=\"icon-pencil icon-white\"></i>Comment</span></a>" +
-											// 	"&nbsp &nbsp " +
-											// 	"<a href=\"#\"><span class=\"badge badge-important\"><i class=\"icon-heart icon-white\"></i>Collect</span></a>" +
-											// "</div>" +
 										"</div>" +
 									"</div>" +
 								"</div>" +						
@@ -159,6 +175,7 @@ $(document).ready(function() {
 	});
 
 	$("#profile_window_save").click(function() {
+		var user_core_uri = "/api/v1/user_core/" + user_id + "/";
 		var username = window.location.href.split('/')[4];
 		var new_email = $("#profile_window_email").val();
 		var new_pwd = $("#profile_window_password").val();
@@ -171,11 +188,18 @@ $(document).ready(function() {
 		} else if(new_email == "") {
 			alert("Please confirm your new e-mail address.");
 		} else {
+			alert("@@@@@@@@@@@");
+			var patch_data = JSON.stringify({
+				"user": {
+					"email": new_email,
+					"password": new_pwd
+				}
+			});
 			$.ajax({
 				type: "PATCH",
-				url: "/api/v1/user/2/",
+				url: "/api/v1/user/" + user_id + "/",
 				contentType: "application/json",
-				data: '{ "nickname": "TT#OOO#MM"}',
+				data: patch_data,
 				dataType: "application/json",
 				processData:  false,
 				success: function(data) {

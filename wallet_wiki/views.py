@@ -24,6 +24,13 @@ def write_new_article(request, username):
 
 
 @login_required
+def update_article(request, username, articlemeta_id):
+    if username != request.user.username:
+        return HttpResponseRedirect("/index/")
+    return render_to_response("html/update_article.html", locals())
+
+
+@login_required
 def show_my_article(request, username, article_id):
     pass
 
@@ -53,7 +60,7 @@ def view_article(request, author, article_id):
 @login_required
 def view_collection(request, author, collection_id):
     username = request.user.username
-    return render_to_response("html/view_article.html", locals())
+    return render_to_response("html/view_collection.html", locals())
 
 
 

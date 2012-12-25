@@ -86,3 +86,15 @@ footer {
 .tab-pane p {
 	margin-left: 30px;
 }
+
+.article_collect_btn {
+	margin-top: 20px;
+}
+
+.article_versions {
+	margin-top: 10px;
+}
+
+#update_new_bersion_btn {
+	margin-top: 5px;
+}
