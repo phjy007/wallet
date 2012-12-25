@@ -49,6 +49,7 @@ urlpatterns = patterns('',
 
 	url(r'^homepage/(\w+)/$', show_homepage), # when someone login successfully, this url takes him to his own homepage
     url(r'^homepage/(\w+)/new_article/$', write_new_article), # the page that user can write a new article
+    url(r'^homepage/(\w+)/update_article/(\d+)/$', update_article),
     url(r'^homepage/(\w+)/my_article/(\d+)/$', show_my_article), 
     url(r'^homepage/(\w+)/my_collection/(\d+)/$', show_my_collection), 
     url(r'^homepage/(\w+)/message/$', my_message), 
