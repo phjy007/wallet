@@ -32,11 +32,11 @@
 						<ul class="nav">
 						    <li class="active"><a href="/homepage/{{ username }}/" id="nav_homepage"><i class="icon-home icon-white"></i> Homepage</a></li>
 						    <li><a href="/piggybank/{{ username }}/" id="nav_my_piggybank"><i class="icon-share-alt icon-white"></i> My Piggybank</a></li>
-						    <li><a href="/homepage/message/{{ username }}/" id="nav_message"><i class="icon-envelope icon-white"></i> Message</a></li>
+						    <!-- <li><a href="/homepage/message/{{ username }}/" id="nav_message"><i class="icon-envelope icon-white"></i> Message</a></li> -->
 					    </ul>
-					    <form class="navbar-search" action="/search/" method="GET">
+					   <!--  <form class="navbar-search" action="/search/" method="GET">
   								<input type="text" class="search-query" placeholder="Search...">
-						</form>	
+						</form>	 -->
 						<ul class="nav pull-right">	
 					   		<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -47,9 +47,9 @@
 									<li>
 										<a href="#profileModal" id="dropdown_profile" data-toggle="modal"><i class="icon-list-alt"></i> Profile</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="#" id="dropdown_message"><i class="icon-envelope"></i> Message</a>
-									</li>
+									</li> -->
 									<li class="divider"></li>
 									<li>
 										<a href="#helpModal" data-toggle="modal" ><i class=" icon-eye-open"></i> Help</a>
@@ -74,6 +74,15 @@
 			<div>
 				<textarea id="new_article_content" rows="30" class="field span12" placeholder="Content..."></textarea>
 			</div>
+
+			<div class="alert alert-block" id="add_references_area">
+				<div>
+					reference article id:<input type="text" class="span1" id="add_references_input">
+				</div>
+				<a href="#" id="add_references_btn"><i class="icon-plus-sign"></i><span> Add a reference</span></a>
+				<div id="add_references_starts"></div>
+			</div>
+
 			<a class="btn btn-primary" id="new_article_save"><i class="icon-thumbs-up icon-white"></i> Save</a>
 				
 		</div>

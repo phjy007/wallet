@@ -45,16 +45,60 @@
 				      </label> -->
 					  <button type="submit" class="btn" class="span4">Sign in</button>
 					  &nbsp&nbsp&nbsp&nbsp
-					  <button type="submit" class="btn" class="span8">Register</button>
+					  <button type="submit" class="btn" class="span8" id="register" href="#registerModal" data-toggle="modal">Register</button>
 				    </div>
 				  </div>
 				</form>
 
 			</div>
-
-
 		</div>
+
 		
+		<!-- Register Modals -->
+		<div class="modal hide fade" id="registerModal">
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal">×</a>
+				<h4>Registeration</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" action="/register/" method="POST">
+				  <div class="control-group">
+				    <label class="control-label" for="reg_inputUsername">Username</label>
+				    <div class="controls">
+				      <input type="text" id="reg_inputUsername" name="username" placeholder="Username">
+				    </div>
+				  </div>
+				  <div class="control-group">
+				    <label class="control-label" for="reg_inputPassword">Password</label>
+				    <div class="controls">
+				      <input type="password" id="reg_inputPassword" name="password" placeholder="Password">
+				    </div>
+				  </div>
+				  <div class="control-group">
+				    <label class="control-label" for="reg_inputEmail">Email</label>
+				    <div class="controls">
+				      <input type="text" id="reg_inputEmail" name="email" placeholder="Email">
+				    </div>
+				  </div>
+				  <div class="control-group">
+				    <label class="control-label" for="reg_inputPortrait">Portrait</label>
+				    <div class="controls">
+				      <input type="file" id="reg_inputPortrait" name="portrait">
+				    </div>
+				  </div>
+				  <div class="control-group">
+				    <div class="controls">
+					  <button type="submit" class="btn" class="span4">Submit</button>
+				    </div>
+				  </div>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
+			</div>
+		</div>
+
 
 		<footer class="index_footer">
         	<center>
@@ -63,6 +107,6 @@
       	</footer>
       	<script src="/static/plugins/jquery/jquery-1.8.3.js"></script>
 		<script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
-	
+		<script src="/static/js/index.js"></script>
 	</body>
 </html>

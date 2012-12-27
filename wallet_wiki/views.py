@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,render_to_response
+from django.contrib.auth.models import User
+from wallet_wiki.models import UserProfile
 
 # Create your views here.
 def show_index(request):
@@ -65,6 +67,7 @@ def view_collection(request, author, collection_id):
 
 
 
+
 def login_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
@@ -81,3 +84,30 @@ def login_view(request):
 def logout_view(request):
     auth.logout(request)
     return HttpResponseRedirect("/index/")
+
+
+def register_view(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        portrait = request.POST['portrait']
+        # print username, ' ', password, ' ', email, ' ', portrait
+        user = User.objects.create_user(username, email, password)  
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        auth.login(request, user)
+        # user_profile = UserProfile.objects.get(user=user)
+        # user_profile.portrait = "img/user/" + username + "/portrait/" + portrait
+        return HttpResponseRedirect("/homepage/" + username + "/") 
+
+
+def modify_profile(request):
+    pass
+
+
+# def upload_portrait(request):
+#     if request.method == 'POST':
+#     file = request.FILES.get('portrait','')   

@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 	//Load the article
 	var comments, title, content, author_id, author_portrait, author_name;
-	var article_versions, this_article_version, article_meta_id;
+	var article_versions, this_article_version, article_meta_id, article_references;
 	$.ajax({
 		type: "GET",
 		async: false,
@@ -28,6 +28,7 @@ $(document).ready(function() {
 					title = item.title;
 					article_versions = item.versions;
 					article_meta_id = item.id;
+					article_references = item.siting_article;
 				}
 				if(ii == "version") {
 					this_article_version = item;
@@ -40,6 +41,46 @@ $(document).ready(function() {
 	$("#article_title").html(title);
 	$("#article_content").html(content);
 
+	// alert(article_references.length);
+
+	//Show references
+	if(article_references.length > 0) {
+		$(".article_reference_label").html("References:");
+	}
+	for(var i = 0; i < article_references.length; i++) {
+		// alert(article_references[i]);
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: article_references[i],
+			success: function(data) {
+				var reference_title;
+				var reference_last_version;
+				var reference_author;
+				$.each(data, function(ii, item) {
+					if(ii == "title") {
+						reference_title = item;
+					}
+					if(ii == "versions") {
+						reference_last_version = item[item.length - 1].split("/")[4];
+					}
+					if(ii == "author") {
+						reference_author = item.user.username;
+					}
+				});
+				// alert(reference_title + "   " +reference_last_version);
+				$("#article_reference_start").before(
+					"<div><i class=\" icon-chevron-right\"></i> " + 
+					"<a href=\"/piggybank/" + reference_author + "/article/" + reference_last_version + "\"</a>" + 
+					reference_title + "</a>" + 
+					"<span class=\"wallet_assist_word\"> (" + reference_author + ")</span>" + 
+					"</div>"
+				);
+			}
+		});
+	}
+
+
 	// Show the choice button for article versions
 	if(this_article_version + 1 == article_versions.length) {
 		$("#version_btn_label").html("View old versions");
@@ -48,6 +89,7 @@ $(document).ready(function() {
 		$("#version_btn_dropdown").addClass("btn-danger");
 		$("#version_btn_label").html("You're reading an old version!");
 	}
+	article_versions = article_versions.sort();
 	for(var i = article_versions.length - 1; i >= 0 ; i--) {
 		// alert(article_versions[i].split('/')[4]);
 		var version_uri = "/piggybank/" + author_name + "/article/" + article_versions[i].split('/')[4];
@@ -200,7 +242,8 @@ $(document).ready(function() {
 				
 			}
 		});
-		location.reload();
+		// location.reload();
+		window.location.replace(window.location.href);
 	});
 
 });

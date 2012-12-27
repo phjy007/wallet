@@ -23,12 +23,12 @@ class UserProfile(models.Model):
 		return os.path.join('img/user', str(instance.user.username), 'portrait', filename)
 
 	user      = models.OneToOneField(User)
-	nickname  = models.CharField(max_length=50, unique=True)
+	nickname  = models.CharField(max_length=50, blank=True, null=True)
 	following = models.ManyToManyField('self', blank=True, null=True, symmetrical=False)
 	portrait  = models.ImageField(upload_to=portrait_path, blank=True, null=True)
 
 	def __unicode__(self):
-		return self.nickname 
+		return self.user.username
 
 	def create_user_profile(sender, instance, created, **kwargs):
 		if created:  
@@ -185,9 +185,8 @@ class Collection(models.Model):
 
 	class Meta:
 		ordering = ['belong_to', '-collect_time']
-	
-	class Meta:
 		unique_together = (('article', 'belong_to'),)
+		
 
 def collect_post_save_callbalck(sender, instance, created, **kwargs):
 	if issubclass(sender, Collection):

@@ -167,7 +167,8 @@ $(document).ready(function() {
 			});
 
 		}
-		location.reload();
+		// location.reload();
+		window.location.replace(window.location.href);
 	});
 
 });

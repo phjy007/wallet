@@ -1,5 +1,5 @@
 footer {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .wallet_assist_word {
@@ -96,5 +96,22 @@ footer {
 }
 
 #update_new_bersion_btn {
-	margin-top: 5px;
+	margin-top: 
+}
+
+#article_reference_area {
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+.article_reference_label {
+	color:#666666;
+}
+
+.reference_item {
+	margin-left: 20px;
+}
+
+#add_references_btn {
+	margin-bottom: 10px;
 }
